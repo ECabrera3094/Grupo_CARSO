@@ -56,9 +56,8 @@ class TestCases_validation_TXT_CV():
         self.Usuarios_Parquet_File_path = Locators_validation_TXT_CV.Usuarios_Parquet_File_path
 
     def start(self):
-        self.download_Compressed_Files()
+        #self.download_Compressed_Files()
         self.unzip_Compressed_Files()
-        #self.convert_CSV_to_Parquet(self.Usuarios_CSV_File_path, self.Usuarios_Parquet_File_path)
 
     def download_Compressed_Files(self):
 
@@ -210,7 +209,7 @@ class TestCases_validation_TXT_CV():
                     # Close CTL File
                     ctl_file.close()
 
-                    print('CSV - CTL {0} {1} OK'.format(country, title_Operation) if len(csv_file) == ctl_value else 'CSV - CTL {0} {1} FAIL'.format(country, title_Operation))
+                    print('CSV - CTL {0} {1}: {2}/{3} OK'.format(country, title_Operation, len(csv_file), ctl_value) if len(csv_file) == ctl_value else 'CSV - CTL {0} {1} FAIL'.format(country, title_Operation))
 
                     # ----- MD5
                     # Open MD5 File
@@ -220,8 +219,17 @@ class TestCases_validation_TXT_CV():
                     print("Archivo MD5 PASS" if len(md5_value) == 32 else "Archivo MD5 FAIL")
                     # Close MD5 File
                     md5_file.close()
+
                 except:
                     pass
+
+
+
+
+
+
+
+
 '''
 - validar que exista el archivo en el zip
 - validar que el csv no venga vacio
