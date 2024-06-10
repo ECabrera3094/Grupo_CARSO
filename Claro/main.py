@@ -1,8 +1,6 @@
 import unittest
-import HtmlTestRunner 
 
 from TestCases.test_validation_TXT_CV import TestCases_validation_TXT_CV
-from Locators.locators_validation_TXT_CV import Locators_validation_TXT_CV
 
 class Claro(unittest.TestCase):
     
@@ -10,7 +8,7 @@ class Claro(unittest.TestCase):
     def setUpClass(cls):
         pass
 
-    def test_Claro(self):
+    def test_Claro_Video(self):
         tc = TestCases_validation_TXT_CV()
         tc.start()
 
@@ -20,4 +18,4 @@ class Claro(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output=Locators_validation_TXT_CV.Evidence_path))
+    #python -m pytest main.py --html=reporte.html
