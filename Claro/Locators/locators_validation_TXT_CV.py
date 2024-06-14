@@ -48,7 +48,6 @@ class Locators_validation_TXT_CV():
     xpath_descargar_archivo_button = "/html/body/div[2]/div/div/div/div/section/div/div[2]/div[1]/div/div[2]/div/section/div/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div[1]/div[4]/div/span/div/div/span/span/a/button"
 
     Download_path = "C:\\Automation\\Claro\\Downloads"
-    Evidence_path = "C:\\Automation\\Claro\\Evidence\\Reporte.html"
     Drivers_path = "C:\\Automation\\Claro\\Drivers\\chromedriver.exe"
     Usuarios_CSV_File_path = "C:\\Users\\Emiliano Cabrera P\\Desktop\\Visualizaciones_ARGENTINA_20240527.csv"
     Usuarios_CTL_File_path  = "C:\\Users\\Emiliano Cabrera P\\Desktop\\Usuarios_MEXICO_20240521.ctl"

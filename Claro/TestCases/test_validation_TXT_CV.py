@@ -3,13 +3,10 @@ import time
 import zipfile
 import pyarrow
 import datetime
-import unittest 
 import itertools
 import pandas as pd
 from pyarrow import csv
-import pyarrow.parquet as pq
 import pyarrow.parquet
-from tqdm import tqdm
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -56,11 +53,12 @@ class TestCases_validation_TXT_CV():
         self.Usuarios_Parquet_File_path = Locators_validation_TXT_CV.Usuarios_Parquet_File_path
 
     def start(self):
-        #self.download_Compressed_Files()
+        self.download_Compressed_Files()
         self.unzip_Compressed_Files()
 
     def download_Compressed_Files(self):
 
+        print("=====> Inicia Descarga de Archivos <=====")
         # Specify Services as Driver Path
         service = Service(executable_path = self.Drivers_path)
         # Specify Chrome Options
@@ -147,7 +145,7 @@ class TestCases_validation_TXT_CV():
             print("Array: ", len(chrome_temp_file))
             # If the Array contains more than one .crdownload File, we have to wait
             if (len(chrome_temp_file) >= 1 or len(firefox_temp_file) >= 1):
-                print('downloading files ...')
+                print('dDownloading Ffiles ...')
                 time.sleep(30)
             else:
                 # Break the Loop.
@@ -167,6 +165,7 @@ class TestCases_validation_TXT_CV():
 
     def unzip_Compressed_Files(self):
         
+        print("=====> Inicia Descompresion de Archivos <=====")
         # Obtain the DateTime and Replace the "-" symbol. 
         today = str(datetime.date.today()).replace("-","")
         #today = str(20240602)
@@ -222,30 +221,3 @@ class TestCases_validation_TXT_CV():
 
                 except:
                     pass
-
-
-
-
-
-
-
-
-'''
-- validar que exista el archivo en el zip
-- validar que el csv no venga vacio
-- validar que el bionario sea de una linea o no venga vacio
-- saber crear un nuevo reporte HTML.
-
-Visualizaciones_ARGENTINA_20240527
-'''
-
-'''
-        #df = pd.DataFrame()
-        df = pd.read_csv(csv_file_path, engine = 'python', header = 0, sep='|', encoding='utf-8')
-        print(len(table))
-        #df.to_parquet(parquet_file_path)
-        table = pa.Table.from_pandas(df)
-        pq.write_table(table, parquet_file_path)
-        print(len(table))
-        #return df
-'''
