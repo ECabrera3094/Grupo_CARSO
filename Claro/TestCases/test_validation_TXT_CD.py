@@ -17,44 +17,45 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 
-# Locators
-from Locators.locators_validation_TXT_CV import Locators_validation_TXT_CV
+from Locators.locators_validation_TXT_CD import Locators_validation_TXT_CD
 
-class TestCases_validation_TXT_CV():
+class TestCases_validation_TXT_CD():
 
     def __init__(self):
-        self.Drivers_path  = Locators_validation_TXT_CV.Drivers_path 
+        self.Drivers_path = Locators_validation_TXT_CD.Drivers_path
 
-        self.Loocker_URL = Locators_validation_TXT_CV.Loocker_URL
-        self.Loocker_user = Locators_validation_TXT_CV.Loocker_user 
-        self.Loocker_password = Locators_validation_TXT_CV.Loocker_password
-        self.list_Countries = Locators_validation_TXT_CV.list_Countries
-        self.list_TXT_Operations_Files = Locators_validation_TXT_CV.list_TXT_Operations_Files
+        self.Loocker_URL = Locators_validation_TXT_CD.Loocker_URL
+        self.Loocker_user = Locators_validation_TXT_CD.Loocker_user
+        self.Loocker_password = Locators_validation_TXT_CD.Loocker_password
+        self.list_Countries = Locators_validation_TXT_CD.list_Countries
+        self.list_TXT_Operations_Files = Locators_validation_TXT_CD.list_TXT_Operations_Files
 
-        self.id_textbox_user = Locators_validation_TXT_CV.id_textbox_user 
-        self.id_textbox_password  = Locators_validation_TXT_CV.id_textbox_password 
-        self.id_loging_button = Locators_validation_TXT_CV.id_loging_button
-        self.xpath_main_page_logo = Locators_validation_TXT_CV.xpath_main_page_logo
-        self.xpath_dashboard_claro_video_link = Locators_validation_TXT_CV.xpath_dashboard_claro_video_link
-        self.xpath_produccion_link = Locators_validation_TXT_CV.xpath_produccion_link
-        self.xpath_reportes_homologados_link = Locators_validation_TXT_CV.xpath_reportes_homologados_link
-        self.xpath_claro_video_link = Locators_validation_TXT_CV.xpath_claro_video_link
-        self.xpath_archivos_txt_link = Locators_validation_TXT_CV.xpath_archivos_txt_link
-        self.xpath_archivos_operaciones_cv_link = Locators_validation_TXT_CV.xpath_archivos_operaciones_cv_link
-        self.xpath_pais_button = Locators_validation_TXT_CV.xpath_pais_button
-        self.xpath_close_pais = Locators_validation_TXT_CV.xpath_close_pais
-        self.xpath_listbox_pais = Locators_validation_TXT_CV.xpath_listbox_pais
-        self.xpath_actualizar_button = Locators_validation_TXT_CV.xpath_actualizar_button
-        self.xpath_descargar_archivo_button = Locators_validation_TXT_CV.xpath_descargar_archivo_button
+        self.id_textbox_user = Locators_validation_TXT_CD.id_textbox_user
+        self.id_textbox_password = Locators_validation_TXT_CD.id_textbox_password
+        self.id_loging_button = Locators_validation_TXT_CD.id_loging_button
+        self.xpath_main_page_logo = Locators_validation_TXT_CD.xpath_main_page_logo
+        self.xpath_dashboard_claro_video_link = Locators_validation_TXT_CD.xpath_dashboard_claro_video_link
+        self.xpath_produccion_link = Locators_validation_TXT_CD.xpath_produccion_link
+        self.xpath_reportes_homologados_link = Locators_validation_TXT_CD.xpath_reportes_homologados_link
+        self.xpath_claro_drive_link = Locators_validation_TXT_CD.xpath_claro_drive_link
+        self.xpath_claro_drive_masivo = Locators_validation_TXT_CD.xpath_claro_drive_masivo
+        self.xpath_archivos_txt_link = Locators_validation_TXT_CD.xpath_archivos_txt_link
+        self.xpath_archivos_operaciones_cd_link = Locators_validation_TXT_CD.xpath_archivos_operaciones_cd_link
+        self.xpath_pais_button = Locators_validation_TXT_CD.xpath_pais_button
+        self.xpath_close_pais = Locators_validation_TXT_CD.xpath_close_pais
+        self.xpath_listbox_pais = Locators_validation_TXT_CD.xpath_listbox_pais
+        self.xpath_actualizar_button = Locators_validation_TXT_CD.xpath_actualizar_button
+        self.xpath_panel_actions = Locators_validation_TXT_CD.xpath_panel_actions
+        self.xpath_clear_cache_update = Locators_validation_TXT_CD.xpath_clear_cache_update
+        self.xpath_descargar_archivo_button = Locators_validation_TXT_CD.xpath_descargar_archivo_button
 
-        self.Download_path = Locators_validation_TXT_CV.Download_path
+        self.Download_path = Locators_validation_TXT_CD.Download_path        
 
     def start(self):
         self.download_Compressed_Files()
         self.unzip_Compressed_Files()
 
     def download_Compressed_Files(self):
-
         print("=====> Inicia Descarga de Archivos <=====")
         # Specify Services as Driver Path
         service = Service(executable_path = self.Drivers_path)
@@ -95,15 +96,18 @@ class TestCases_validation_TXT_CV():
         # Click on "Reportes Homologados" Link
         driver.find_element(By.XPATH, self.xpath_reportes_homologados_link).click()
         time.sleep(2)
-        # Click on "Claro Video" Link
-        driver.find_element(By.XPATH, self.xpath_claro_video_link).click()
+        # Click on "Claro Drive" Link
+        driver.find_element(By.XPATH, self.xpath_claro_drive_link).click()
+        time.sleep(2)
+        # Click on "Claro Drive Masivo" Link
+        driver.find_element(By.XPATH, self.xpath_claro_drive_masivo).click()
         time.sleep(2)
         # Click on "Archivos TXT" Link
         driver.find_element(By.XPATH, self.xpath_archivos_txt_link).click()
         time.sleep(2)
-        # Click on "Archivos de Operaciones CV" Link
-        driver.find_element(By.XPATH, self.xpath_archivos_operaciones_cv_link).click()
-        time.sleep(10) # <-----
+        # Click on "Archivos de Operaciones CD" Link
+        driver.find_element(By.XPATH, self.xpath_archivos_operaciones_cd_link).click()
+        time.sleep(10)
         # --------------------------------
         # Start the Loop of Countries
         # === Start on Argentin and ends of Uruguay.
@@ -126,6 +130,11 @@ class TestCases_validation_TXT_CV():
             # Clik on "Actualizar" Button
             driver.find_element(By.XPATH, self.xpath_actualizar_button).click() 
             time.sleep(10)
+            # --- Refresh Cache and Update Page
+            driver.find_element(By.XPATH, self.xpath_panel_actions).click()
+            time.sleep(3)
+            driver.find_element(By.XPATH, self.xpath_clear_cache_update).click()
+            time.sleep(10)
             # Click on "Descargar Archivo" Button
             driver.find_element(By.XPATH, self.xpath_descargar_archivo_button).click()
             time.sleep(15)
@@ -141,7 +150,7 @@ class TestCases_validation_TXT_CV():
             print("Array: ", len(chrome_temp_file))
             # If the Array contains more than one .crdownload File, we have to wait
             if (len(chrome_temp_file) >= 1 or len(firefox_temp_file) >= 1):
-                print('dDownloading Ffiles ...')
+                print('dDownloading Files ...')
                 time.sleep(30)
             else:
                 # Break the Loop.
@@ -153,9 +162,10 @@ class TestCases_validation_TXT_CV():
         driver.quit()
 
     def unzip_Compressed_Files(self):
-        print("=====> Inicia Descompresion de Archivos de Claro Video<=====\n")
+        print("=====> Inicia Descompresion de Archivos de Claro Drive<=====\n")
         # Obtain the DateTime and Replace the "-" symbol. 
-        today = str(datetime.date.today()).replace("-","")
+        # Claro Drive SIEMPRE se revisa UN DIA anterior.
+        today = str(datetime.date.today() - datetime.timedelta(days=1)).replace("-","")
         # ----- Enter the Zip File
         # Validate the 16 Countries
         for country in self.list_Countries:
@@ -200,7 +210,7 @@ class TestCases_validation_TXT_CV():
 
                     # ----- MD5
                     # Open MD5 File
-                    md5_file = open(new_Download_Directory + '\\' + title_Operation + '_' +  country + '_' + today + ".md5_", "rb")
+                    md5_file = open(new_Download_Directory + '\\' + title_Operation + '_' +  country + '_' + today + ".md5", "rb")
                     # Read MD5 File
                     md5_value = md5_file.read()
                     print("Archivo MD5 PASS" if len(md5_value) == 32 else "Archivo MD5 FAIL\n")
@@ -215,4 +225,4 @@ class TestCases_validation_TXT_CV():
         delmt = '|' 
         table = csv.read_csv(csv_file_path, parse_options = csv.ParseOptions(delimiter = delmt))
         # Save the Parquet File
-        pyarrow.parquet.write_table(table, parquet_file_path)
+        pyarrow.parquet.write_table(table, parquet_file_path)         
