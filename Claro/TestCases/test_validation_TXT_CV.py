@@ -45,6 +45,8 @@ class TestCases_validation_TXT_CV():
         self.xpath_close_pais = Locators_validation_TXT_CV.xpath_close_pais
         self.xpath_listbox_pais = Locators_validation_TXT_CV.xpath_listbox_pais
         self.xpath_actualizar_button = Locators_validation_TXT_CV.xpath_actualizar_button
+        self.xpath_panel_actions = Locators_validation_TXT_CV.xpath_panel_actions
+        self.xpath_clear_cache_update = Locators_validation_TXT_CV.xpath_clear_cache_update
         self.xpath_descargar_archivo_button = Locators_validation_TXT_CV.xpath_descargar_archivo_button
 
         self.Download_path = Locators_validation_TXT_CV.Download_path
@@ -126,6 +128,11 @@ class TestCases_validation_TXT_CV():
             # Clik on "Actualizar" Button
             driver.find_element(By.XPATH, self.xpath_actualizar_button).click() 
             time.sleep(10)
+            # --- Refresh Cache and Update Page
+            driver.find_element(By.XPATH, self.xpath_panel_actions).click()
+            time.sleep(3)
+            driver.find_element(By.XPATH, self.xpath_clear_cache_update).click()
+            time.sleep(10)
             # Click on "Descargar Archivo" Button
             driver.find_element(By.XPATH, self.xpath_descargar_archivo_button).click()
             time.sleep(15)
@@ -167,9 +174,9 @@ class TestCases_validation_TXT_CV():
                 # Loading the temp.zip and creating a Zip Object 
                 with zipfile.ZipFile(self.Download_path + '\\txt_' + country + '_' + today +'.zip', 'r') as zipObject:
                     zipObject.extractall(path = new_Download_Directory)
+                print("Pais: ", country, " OK\n")
             except:
-                pass
-            print("Pais: ", country, " OK\n")
+                print("Pais: ", country, " FAIL\n")
 
         print("Validacion de 16 Paises.\n")
         # Validate the 16 Countries
@@ -203,12 +210,13 @@ class TestCases_validation_TXT_CV():
                     md5_file = open(new_Download_Directory + '\\' + title_Operation + '_' +  country + '_' + today + ".md5_", "rb")
                     # Read MD5 File
                     md5_value = md5_file.read()
-                    print("Archivo MD5 PASS" if len(md5_value) == 32 else "Archivo MD5 FAIL\n")
+                    print("MD5 {0} {1} PASS".format(country, title_Operation) if len(md5_value) == 32 else "MD5 {0} {1} FAIL\n".format(country, title_Operation))
                     # Close MD5 File
                     md5_file.close()
 
                 except:
                     pass
+            print("\n")
 
     def convert_CSV_to_Parquet(self, csv_file_path, parquet_file_path):
         # Symbol that Delimit each Element of the Frame

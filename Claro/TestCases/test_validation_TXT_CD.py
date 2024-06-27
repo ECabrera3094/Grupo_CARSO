@@ -107,12 +107,12 @@ class TestCases_validation_TXT_CD():
         time.sleep(2)
         # Click on "Archivos de Operaciones CD" Link
         driver.find_element(By.XPATH, self.xpath_archivos_operaciones_cd_link).click()
-        time.sleep(10)
+        time.sleep(15)
         # --------------------------------
         # Start the Loop of Countries
         # === Start on Argentin and ends of Uruguay.
         i = 1
-        for _ in itertools.repeat(None, 16):
+        for _ in itertools.repeat(None, 17):
             # Click on "Pais" Button
             driver.find_element(By.XPATH, self.xpath_pais_button).click()
             time.sleep(2)
@@ -126,7 +126,7 @@ class TestCases_validation_TXT_CD():
             time.sleep(2)
             # Choose a Countrie
             driver.find_element(By.XPATH, "/html/body/div[3]/div[2]/div/div/div/div/ul/li["+str(i)+"]/div/div").click() # !!!
-            time.sleep(2)
+            time.sleep(5)
             # Clik on "Actualizar" Button
             driver.find_element(By.XPATH, self.xpath_actualizar_button).click() 
             time.sleep(10)
@@ -165,7 +165,7 @@ class TestCases_validation_TXT_CD():
         print("=====> Inicia Descompresion de Archivos de Claro Drive<=====\n")
         # Obtain the DateTime and Replace the "-" symbol. 
         # Claro Drive SIEMPRE se revisa UN DIA anterior.
-        today = str(datetime.date.today() - datetime.timedelta(days=1)).replace("-","")
+        today = str(datetime.date.today() - datetime.timedelta(days = 1)).replace("-","")
         # ----- Enter the Zip File
         # Validate the 16 Countries
         for country in self.list_Countries:
@@ -177,9 +177,11 @@ class TestCases_validation_TXT_CD():
                 # Loading the temp.zip and creating a Zip Object 
                 with zipfile.ZipFile(self.Download_path + '\\txt_' + country + '_' + today +'.zip', 'r') as zipObject:
                     zipObject.extractall(path = new_Download_Directory)
+                
+                print("Pais: ", country, " OK\n")
             except:
-                pass
-            print("Pais: ", country, " OK\n")
+                print("Pais: ", country, " FAIL\n")
+
 
         print("Validacion de 16 Paises.\n")
         # Validate the 16 Countries
@@ -213,12 +215,13 @@ class TestCases_validation_TXT_CD():
                     md5_file = open(new_Download_Directory + '\\' + title_Operation + '_' +  country + '_' + today + ".md5", "rb")
                     # Read MD5 File
                     md5_value = md5_file.read()
-                    print("Archivo MD5 PASS" if len(md5_value) == 32 else "Archivo MD5 FAIL\n")
+                    print("MD5 {0} {1} PASS".format(country, title_Operation) if len(md5_value) == 33 else "MD5 {0} {1} FAIL\n".format(country, title_Operation))
                     # Close MD5 File
                     md5_file.close()
 
                 except:
                     pass
+            print("\n")
 
     def convert_CSV_to_Parquet(self, csv_file_path, parquet_file_path):
         # Symbol that Delimit each Element of the Frame
