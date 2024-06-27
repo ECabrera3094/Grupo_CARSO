@@ -11,9 +11,10 @@ class Claro(unittest.TestCase):
     
     def test_Claro_Video(self):
         print("=====> Inicio del TestCase <=====")
-        #tc = TestCases_validation_TXT_CV()
-        tc = TestCases_validation_TXT_CD()
-        tc.start()
+        #tc_cv = TestCases_validation_TXT_CV()
+        #tc_cv.start()
+        tc_cd = TestCases_validation_TXT_CD()
+        tc_cd.start()
         print("=====> Fin del TestCase <=====")
 
     @classmethod
