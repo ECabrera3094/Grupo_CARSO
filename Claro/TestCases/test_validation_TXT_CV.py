@@ -62,6 +62,9 @@ class TestCases_validation_TXT_CV():
         service = Service(executable_path = self.Drivers_path)
         # Specify Chrome Options
         options = webdriver.ChromeOptions()
+        # For Chrome we ignore any Secure Certificate
+        options.add_argument('--ignore-certificate-errors')
+        options.add_argument('--ignore-ssl-errors')
         # Specify the Path of any Download
         options.add_experimental_option('prefs', {'download.default_directory' : self.Download_path} )
         driver = webdriver.Chrome(service = service, options = options)
