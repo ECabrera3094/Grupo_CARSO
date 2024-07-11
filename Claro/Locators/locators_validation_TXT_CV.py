@@ -45,6 +45,8 @@ class Locators_validation_TXT_CV():
     xpath_close_pais = "/html/body/div[3]/div/div/div/div/div/div/div/div/div[2]/button/div[2]"
     xpath_listbox_pais = "/html/body/div[3]/div/div/div/div/div/div/div/div/div[1]/input[2]"
     xpath_actualizar_button = "/html/body/div[2]/div/div/div/div/section/div/div[1]/div/div[1]/div[2]/div/div/button"                
+    xpath_panel_actions = "/html/body/div[2]/div/div/div/div/section/div/div[1]/div/div[1]/div[2]/div/button[2]/div[2]" #/svg
+    xpath_clear_cache_update = "/html/body/div[3]/div/div/div/div/div/ul/li[1]/button/div[2]/span"
     xpath_descargar_archivo_button = "/html/body/div[2]/div/div/div/div/section/div/div[2]/div[1]/div/div[2]/div/section/div/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div[1]/div[4]/div/span/div/div/span/span/a/button"
 
     Drivers_path = "C:\\Automation\\Claro\\Drivers\\chromedriver.exe"
