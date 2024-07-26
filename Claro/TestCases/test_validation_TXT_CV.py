@@ -181,6 +181,10 @@ class TestCases_validation_TXT_CV():
             except:
                 print("Pais: ", country, " FAIL\n")
 
+        print("Validacion de Duplicidad.\n")
+
+        self.validate_duplicity(self.list_Countries, self.list_TXT_Operations_Files, today)
+
         print("Validacion de 16 Paises.\n")
         # Validate the 16 Countries
         for country in self.list_Countries:
@@ -206,6 +210,11 @@ class TestCases_validation_TXT_CV():
                     # Close CTL File
                     ctl_file.close()
 
+                    try:
+                        assert len(csv_file) == ctl_value
+                    except AssertionError as e:
+                        print(f"Error de Assert: {e}")
+                    
                     print('CSV - CTL {0} {1}: {2}/{3} OK'.format(country, title_Operation, len(csv_file), ctl_value) if len(csv_file) == ctl_value else 'CSV - CTL {0} {1} FAIL'.format(country, title_Operation))
 
                     # ----- MD5
@@ -213,12 +222,19 @@ class TestCases_validation_TXT_CV():
                     md5_file = open(new_Download_Directory + '\\' + title_Operation + '_' +  country + '_' + today + ".md5_", "rb")
                     # Read MD5 File
                     md5_value = md5_file.read()
+
+                    try:
+                        assert len(md5_value) == 32
+                    except AssertionError as e:
+                        print(f"Error de Assert: {e}")
+
                     print("MD5 {0} {1} PASS".format(country, title_Operation) if len(md5_value) == 32 else "MD5 {0} {1} FAIL\n".format(country, title_Operation))
                     # Close MD5 File
                     md5_file.close()
 
                 except:
                     pass
+
             print("\n")
 
     def convert_CSV_to_Parquet(self, csv_file_path, parquet_file_path):
@@ -227,3 +243,35 @@ class TestCases_validation_TXT_CV():
         table = csv.read_csv(csv_file_path, parse_options = csv.ParseOptions(delimiter = delmt))
         # Save the Parquet File
         pyarrow.parquet.write_table(table, parquet_file_path)
+
+    def validate_duplicity(self, list_Countries, list_TXT_Operations_Files, today):
+
+        try:
+            for country in list_Countries:
+                
+                for title_Operation in list_TXT_Operations_Files:
+
+                    new_Download_Directory = "C:\\Automation\\Claro\\Downloads_CV" + '\\txt_' + country + '_' + today
+
+                    nombre_base = title_Operation + '_' +  country + '_' + today + ".csv"
+
+                    contador = 0
+
+                    nombre_archivo = new_Download_Directory + '\\' + title_Operation + '_' +  country + '_' + today + ".csv" 
+
+                    contador = sum(1 for nombre_archivo in os.listdir(new_Download_Directory) if nombre_archivo.startswith(nombre_base))
+
+                    # if contador == 1:
+                    #     print(f"El archivo base '{nombre_base}' aparece {contador} veces.")
+                    # elif contador >= 2:
+                    #     print(f"El archivo base '{nombre_base}' aparece {contador} veces.")
+                    # elif contador == 0:
+                    #     print(f"El archivo base '{nombre_base}' aparece {contador} veces.")
+
+                    try:
+                        assert contador <= 1
+                    except AssertionError as e:
+                        print(f"Error de Assert: {e}")
+
+        except:
+            pass
