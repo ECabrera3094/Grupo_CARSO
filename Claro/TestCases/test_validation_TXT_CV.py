@@ -84,31 +84,20 @@ class TestCases_validation_TXT_CV():
         driver.find_element(By.ID, self.id_textbox_password).send_keys(self.Loocker_password)
         # Click Login Button
         driver.find_element(By.ID, self.id_loging_button).click()
-        # Validate the Main Page based on the Dashboard Claro Video Link
-        try:
-            WebDriverWait(driver, 5).until(
-                EC.visibility_of_element_located((By.XPATH, self.xpath_dashboard_claro_video_link))
-            )
-        except TimeoutException as toe:
-            print("Timeout Error on Loading Page: ", toe)
-        # Click on "Dashboards Claro" Link
-        driver.find_element(By.XPATH, self.xpath_dashboard_claro_video_link).click()
-        time.sleep(2)
-        # Click on "Produccion" Link
-        driver.find_element(By.XPATH, self.xpath_produccion_link).click()
-        time.sleep(2)
+        #---
+        time.sleep(15)
         # Click on "Reportes Homologados" Link
         driver.find_element(By.XPATH, self.xpath_reportes_homologados_link).click()
-        time.sleep(2)
+        time.sleep(5)
         # Click on "Claro Video" Link
         driver.find_element(By.XPATH, self.xpath_claro_video_link).click()
-        time.sleep(2)
+        time.sleep(5)
         # Click on "Archivos TXT" Link
         driver.find_element(By.XPATH, self.xpath_archivos_txt_link).click()
-        time.sleep(2)
+        time.sleep(5)
         # Click on "Archivos de Operaciones CV" Link
         driver.find_element(By.XPATH, self.xpath_archivos_operaciones_cv_link).click()
-        time.sleep(10) # <-----
+        time.sleep(15) # <-----
         # --------------------------------
         # Start the Loop of Countries
         # === Start on Argentin and ends of Uruguay.

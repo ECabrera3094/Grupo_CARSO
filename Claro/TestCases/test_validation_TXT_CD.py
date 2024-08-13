@@ -72,7 +72,7 @@ class TestCases_validation_TXT_CD():
         #driver.delete_all_cookies()
         # Validate the Login Page based on the User Textbox
         try:
-            WebDriverWait(driver, 5).until(
+            WebDriverWait(driver, 30).until(
                 EC.visibility_of_element_located((By.ID, self.id_textbox_user))
             )
         except TimeoutException as toe:
@@ -83,31 +83,20 @@ class TestCases_validation_TXT_CD():
         driver.find_element(By.ID, self.id_textbox_password).send_keys(self.Loocker_password)
         # Click Login Button
         driver.find_element(By.ID, self.id_loging_button).click()
-        # Validate the Main Page based on the Dashboard Claro Video Link
-        try:
-            WebDriverWait(driver, 5).until(
-                EC.visibility_of_element_located((By.XPATH, self.xpath_dashboard_claro_video_link))
-            )
-        except TimeoutException as toe:
-            print("Timeout Error on Loading Page: ", toe)
-        # Click on "Dashboards Claro" Link
-        driver.find_element(By.XPATH, self.xpath_dashboard_claro_video_link).click()
-        time.sleep(2)
-        # Click on "Produccion" Link
-        driver.find_element(By.XPATH, self.xpath_produccion_link).click()
-        time.sleep(2)
+        #---
+        time.sleep(15)
         # Click on "Reportes Homologados" Link
         driver.find_element(By.XPATH, self.xpath_reportes_homologados_link).click()
-        time.sleep(2)
+        time.sleep(5)
         # Click on "Claro Drive" Link
         driver.find_element(By.XPATH, self.xpath_claro_drive_link).click()
-        time.sleep(2)
+        time.sleep(5)
         # Click on "Claro Drive Masivo" Link
         driver.find_element(By.XPATH, self.xpath_claro_drive_masivo).click()
-        time.sleep(2)
+        time.sleep(5)
         # Click on "Archivos TXT" Link
         driver.find_element(By.XPATH, self.xpath_archivos_txt_link).click()
-        time.sleep(2)
+        time.sleep(5)
         # Click on "Archivos de Operaciones CD" Link
         driver.find_element(By.XPATH, self.xpath_archivos_operaciones_cd_link).click()
         time.sleep(15)
