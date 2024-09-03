@@ -234,33 +234,20 @@ class TestCases_validation_TXT_CV():
         pyarrow.parquet.write_table(table, parquet_file_path)
 
     def validate_duplicity(self, list_Countries, list_TXT_Operations_Files, today):
-
         try:
             for country in list_Countries:
-                
                 for title_Operation in list_TXT_Operations_Files:
-
                     new_Download_Directory = "C:\\Automation\\Claro\\Downloads_CV" + '\\txt_' + country + '_' + today
-
                     nombre_base = title_Operation + '_' +  country + '_' + today + ".csv"
-
                     contador = 0
-
                     nombre_archivo = new_Download_Directory + '\\' + title_Operation + '_' +  country + '_' + today + ".csv" 
-
                     contador = sum(1 for nombre_archivo in os.listdir(new_Download_Directory) if nombre_archivo.startswith(nombre_base))
-
-                    # if contador == 1:
-                    #     print(f"El archivo base '{nombre_base}' aparece {contador} veces.")
-                    # elif contador >= 2:
-                    #     print(f"El archivo base '{nombre_base}' aparece {contador} veces.")
-                    # elif contador == 0:
-                    #     print(f"El archivo base '{nombre_base}' aparece {contador} veces.")
-
                     try:
                         assert contador <= 1
                     except AssertionError as e:
-                        print(f"Error de Assert: {e}")
-
+                        print(f"Error de Assert DUPLICIDAD: {e}")
         except:
             pass
+
+    def validate_number_of_files(self):
+        pass
