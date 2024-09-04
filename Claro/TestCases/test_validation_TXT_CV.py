@@ -173,15 +173,12 @@ class TestCases_validation_TXT_CV():
                 print("Pais: ", country, " FAIL\n")
 
         print("Validacion de Duplicidad.\n")
-
         self.validate_duplicity(self.list_Countries, self.list_TXT_Operations_Files, today)
 
         print("Validación de la Cantidad de Archivos.")
-
         self.validate_number_of_files(self.list_Countries, self.dict_Number_of_Files, self.Download_path, today)
 
         print("Validacioin de los Archivos por Operación.")
-
         self.validate_count_files_per_operation(self.list_Countries, self.dict_File_per_Operation, self.Download_path, today)
 
         print("Validacion de 16 Paises.\n")
@@ -296,6 +293,6 @@ class TestCases_validation_TXT_CV():
                 found = [file for file in file_list if file.startswith(f"{expected_file}_")]
 
                 # Verificar que el número de archivos encontrados sea válido
-                assert len(found) in tuple_Valid_Numbers_of_Files_per_Operation, f"Error: {expected_file} en {country} tiene un número no permitido de archivos: {len(found)}"
+                assert len(found) in tuple_Valid_Numbers_of_Files_per_Operation, f"Error: {expected_file} en {country} tiene un Número NO permitido de Archivos: {len(found)}"
 
         print("Todos los Archivos por Operación son Válidos.\n")
