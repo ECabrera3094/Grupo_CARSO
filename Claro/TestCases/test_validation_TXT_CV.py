@@ -30,6 +30,8 @@ class TestCases_validation_TXT_CV():
         self.Loocker_password = Locators_validation_TXT_CV.Loocker_password
         self.list_Countries = Locators_validation_TXT_CV.list_Countries
         self.list_TXT_Operations_Files = Locators_validation_TXT_CV.list_TXT_Operations_Files
+        self.dict_Number_of_Files = Locators_validation_TXT_CV.dict_Number_of_Files
+        self.dict_File_per_Operation = Locators_validation_TXT_CV.dict_File_per_Operation
 
         self.id_textbox_user = Locators_validation_TXT_CV.id_textbox_user 
         self.id_textbox_password  = Locators_validation_TXT_CV.id_textbox_password 
@@ -73,7 +75,7 @@ class TestCases_validation_TXT_CV():
         #driver.delete_all_cookies()
         # Validate the Login Page based on the User Textbox
         try:
-            WebDriverWait(driver, 5).until(
+            WebDriverWait(driver, 30).until(
                 EC.visibility_of_element_located((By.ID, self.id_textbox_user))
             )
         except TimeoutException as toe:
@@ -174,6 +176,14 @@ class TestCases_validation_TXT_CV():
 
         self.validate_duplicity(self.list_Countries, self.list_TXT_Operations_Files, today)
 
+        print("Validación de la Cantidad de Archivos.")
+
+        self.validate_number_of_files(self.list_Countries, self.dict_Number_of_Files, self.Download_path, today)
+
+        print("Validacioin de los Archivos por Operación.")
+
+        self.validate_count_files_per_operation(self.list_Countries, self.dict_File_per_Operation, self.Download_path, today)
+
         print("Validacion de 16 Paises.\n")
         # Validate the 16 Countries
         for country in self.list_Countries:
@@ -249,5 +259,43 @@ class TestCases_validation_TXT_CV():
         except:
             pass
 
-    def validate_number_of_files(self):
-        pass
+    def validate_number_of_files(self, list_Countries, dict_Number_of_Files, Download_path, today):
+
+        for country in list_Countries:
+
+            # Get the Number of Files for the each Country
+            new_Download_Directory = Download_path + '\\txt_' + country + '_' + today
+
+            file_list = os.listdir(new_Download_Directory)
+
+            # Filter Files Only (Excludes Directories)
+            files = len([f for f in file_list if os.path.isfile(os.path.join(new_Download_Directory, f))])
+
+            assert files == dict_Number_of_Files[country], f"Error en {country} tiene un número no permitido de archivos: {files}"
+        
+        print("La Cantidad de Archivos por País son Válidas.\n")
+
+    def validate_count_files_per_operation(self, list_Countries, dict_File_per_Operation, Download_path, today):
+        
+        for country in list_Countries:
+
+            tuple_Valid_Numbers_of_Files_per_Operation = {3, 6}
+
+            # Get the Number of Files for the each Country
+            new_Download_Directory = Download_path + '\\txt_' + country + '_' + today
+
+            # Creo un Conjunto de TODOS los Archivos en el nuevo Directorio 
+            file_list = os.listdir(new_Download_Directory)
+
+            # Obtengo los Nombres de los Archivos esperados para el País
+            expected_files = list(dict_File_per_Operation.get(country, [])) # Obtengo el Valor gracias a la Key
+
+            for expected_file in expected_files:
+
+                # Buscar archivos en archivos_encontrados que comiencen con expected_file y terminen con cualquier extensión
+                found = [file for file in file_list if file.startswith(f"{expected_file}_")]
+
+                # Verificar que el número de archivos encontrados sea válido
+                assert len(found) in tuple_Valid_Numbers_of_Files_per_Operation, f"Error: {expected_file} en {country} tiene un número no permitido de archivos: {len(found)}"
+
+        print("Todos los Archivos por Operación son Válidos.\n")
