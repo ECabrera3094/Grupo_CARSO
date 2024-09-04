@@ -29,6 +29,46 @@ class Locators_validation_TXT_CD():
                     'Usuarios_Eliminados'
                     ]
 
+    dict_Number_of_Files = {
+                    'ARGENTINA' : 15,
+                    'BRASIL' : 15,
+                    'CHILE' : 15,
+                    'COLOMBIA' : 15,
+                    'COSTARICA' : 15,
+                    'DOMINICANA' : 15,
+                    'ECUADOR' : 15,
+                    'ELSALVADOR' : 15,
+                    'GUATEMALA' : 15,
+                    'HONDURAS' : 15,
+                    'MEXICO' : 18,
+                    'NICARAGUA' : 15,
+                    'PANAMA' : 15,
+                    'PARAGUAY' : 15,
+                    'PERU' : 15,
+                    'PUERTORICO' : 15,
+                    'URUGUAY' : 15
+                    }
+
+    dict_File_per_Operation = {
+                    'ARGENTINA' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'BRASIL' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'MEXICO' : ['Consumos', 'Consumos_Pyme','Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'CHILE' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'COLOMBIA' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'COSTARICA' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'DOMINICANA' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'ECUADOR' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'ELSALVADOR' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'GUATEMALA' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'HONDURAS' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'NICARAGUA' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'PANAMA' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'PARAGUAY' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'PERU' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'PUERTORICO' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados'],
+                    'URUGUAY' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados']
+                }
+
     id_textbox_user = "login-email"
     id_textbox_password = "login-password"
     id_loging_button = "login-submit"

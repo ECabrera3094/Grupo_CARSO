@@ -31,6 +31,45 @@ class Locators_validation_TXT_CV():
                     'UsuariosSinCustomerId',
                     'Visualizaciones']
 
+    dict_Number_of_Files = {
+                    'ARGENTINA' : 27,
+                    'BRASIL' : 21,
+                    'CHILE' : 27,
+                    'COLOMBIA' : 27,
+                    'COSTARICA' : 27,
+                    'DOMINICANA' : 27,
+                    'ECUADOR' : 27,
+                    'ELSALVADOR' : 27,
+                    'GUATEMALA' : 27,
+                    'HONDURAS' : 27,
+                    'MEXICO' : 24,
+                    'NICARAGUA' : 27,
+                    'PANAMA' : 27,
+                    'PARAGUAY' : 27,
+                    'PERU' : 27,
+                    #'PUERTORICO' : 27, # <-----
+                    'URUGUAY' : 21
+                    }
+					
+    dict_File_per_Operation = {
+                        'ARGENTINA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'BRASIL' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados','Visualizaciones'],
+                        'MEXICO' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Temporada', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados','Visualizaciones'],
+                        'CHILE' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'COLOMBIA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'COSTARICA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'DOMINICANA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'ECUADOR' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'ELSALVADOR' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'GUATEMALA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'HONDURAS' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'NICARAGUA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'PANAMA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'PARAGUAY' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'PERU' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                        'URUGUAY' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'Visualizaciones']
+                    }
+
     id_textbox_user = "login-email"
     id_textbox_password = "login-password"
     id_loging_button = "login-submit"
