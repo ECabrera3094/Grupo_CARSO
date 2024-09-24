@@ -157,6 +157,7 @@ class TestCases_validation_TXT_CV():
         print("=====> Inicia Descompresion de Archivos de Claro Video<=====\n")
         # Obtain the DateTime and Replace the "-" symbol. 
         today = str(datetime.date.today()).replace("-","")
+        #today = str(20240922)
         # ----- Enter the Zip File
         # Validate the 16 Countries
         for country in self.list_Countries:
@@ -197,6 +198,8 @@ class TestCases_validation_TXT_CV():
                     self.convert_CSV_to_Parquet(csv_file_path, parquet_file_path)
                     csv_file = pd.read_parquet(parquet_file_path, engine='pyarrow')
                     #print(len(csv_file))
+
+                    # AQUI SE ANALIZAN LAS COLUMNAS
 
                     # ----- CTL
                     # Open CTL File
