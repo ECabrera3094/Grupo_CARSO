@@ -16,7 +16,8 @@ class Claro(unittest.TestCase):
         RMUCD.test_get_login_activity_detail()
         RMUCD.test_validations()
         RMUCD.test_create_report()
-        print("=====> Fin de Creación de Reporte Mensual <=====")
+        RMUCD.test_send_email()
+        print("\n=====> Finaliza Creación de Reporte Mensual <=====")
 
     @classmethod
     def tearDownClass(cls):

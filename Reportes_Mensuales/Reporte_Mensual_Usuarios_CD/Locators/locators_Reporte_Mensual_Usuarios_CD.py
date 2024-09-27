@@ -1,4 +1,13 @@
+import calendar
+from datetime import datetime
+
 class Locators_Reportes_Mensual_Usuarios_CD():
+
+    def generate_date():
+        month = calendar.month_name[datetime.now().month - 1][0:3]
+        year = datetime.now().year if datetime.now().month != 1 else datetime.now().year - 1
+        new_date = f"{year} {month}"
+        return new_date
 
     Download_path = "C:\\Automation\\Reportes_Mensuales\\Reporte_Mensual_Usuarios_CD\\Downloads"
 
@@ -21,3 +30,7 @@ class Locators_Reportes_Mensual_Usuarios_CD():
     Dashboard_Activos = 0
     Excel_Activos = 0
     result_Activos = 0
+
+    date = generate_date()
+
+    flag_Difference_Detected = 0

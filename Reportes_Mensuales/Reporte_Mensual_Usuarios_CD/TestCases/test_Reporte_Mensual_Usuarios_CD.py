@@ -1,12 +1,19 @@
-import os
-from Locators.locators_Reporte_Mensual_Usuarios_CD import Locators_Reportes_Mensual_Usuarios_CD
+import ssl
+import smtplib 
+from email.message import EmailMessage
+
 from Queries.query_Dashboard_Reporte_Mensual import query_Dashboard
 from Queries.query_Excel_License_Sold import query_Excel_License_Sold
 from Queries.query_Excel_Login_Activity_Detail import query_Excel_Login_Activity_Detail
 
+from Locators.locators_Reporte_Mensual_Usuarios_CD import Locators_Reportes_Mensual_Usuarios_CD
+
 class TestCases_Reporte_Mensual_Usuarios_CD():
 
     def __init__(self):
+
+        self.date = Locators_Reportes_Mensual_Usuarios_CD.date
+        self.flag_Difference_Detected = Locators_Reportes_Mensual_Usuarios_CD.flag_Difference_Detected
         self.Download_path = Locators_Reportes_Mensual_Usuarios_CD.Download_path
 
         # Operations
@@ -31,38 +38,81 @@ class TestCases_Reporte_Mensual_Usuarios_CD():
         self.result_Activos = Locators_Reportes_Mensual_Usuarios_CD.result_Activos
 
     def test_get_data_from_dashboard(self):
-        self.Dashboard_Suscripcion, self.Dashboard_Licencias_Vendidas, self.Dashboard_Licencias_Ocupadas, self.Dashboard_Login, self.Dashboard_Activos = query_Dashboard('2024 Aug')
+        self.Dashboard_Suscripcion, self.Dashboard_Licencias_Vendidas, self.Dashboard_Licencias_Ocupadas, self.Dashboard_Login, self.Dashboard_Activos = query_Dashboard(self.date)
 
     def test_get_license_sold(self):
-        self.Excel_Suscripcion, self.Excel_Licencias_Vendidas, self.Excel_Licencias_Ocupadas = query_Excel_License_Sold('2024 Aug')
+        self.Excel_Suscripcion, self.Excel_Licencias_Vendidas, self.Excel_Licencias_Ocupadas = query_Excel_License_Sold(self.date)
 
     def test_get_login_activity_detail(self):
         self.Excel_Login, self.Excel_Activos = query_Excel_Login_Activity_Detail('2024 Aug')
 
     def test_validations(self):
-        self.result_Suscripcion = "Las Cifras para Suscripcion son Correctas" if int(self.Dashboard_Suscripcion) == int(self.Excel_Suscripcion) else f"Las Cifras para Suscripcion son Incorrectas {self.Dashboard_Suscripcion} != {self.Excel_Suscripcion}"
-        print(self.result_Suscripcion)
 
-        self.result_Licencias_Vendidas = "Las Cifras para Licencias Vendidas son Correctas" if int(self.Dashboard_Licencias_Vendidas) == int(self.Excel_Licencias_Vendidas) else f"Las Cifras para Suscripcion son Incorrectas {self.Dashboard_Licencias_Vendidas} != {self.Excel_Licencias_Vendidas}"
-        print(self.result_Licencias_Vendidas)
+        comparisons = [
+            ("Suscripcion", int(self.Dashboard_Suscripcion), int(self.Excel_Suscripcion), self.result_Suscripcion), 
+            ("Licencias_Vendidas", int(self.Dashboard_Licencias_Vendidas), int(self.Excel_Licencias_Vendidas), self.result_Licencias_Vendidas),
+            ("Licencias_Ocupadas", int(self.Dashboard_Licencias_Ocupadas), int(self.Excel_Licencias_Ocupadas), self.Dashboard_Licencias_Ocupadas),
+            ("Login", int(self.Dashboard_Login), int(self.Excel_Login), self.result_Login),
+            ("Activos", int(self.Dashboard_Activos), int(self.Excel_Activos), self.result_Activos),
+        ]
 
-        self.result_Licencias_Ocupadas = "Las Cifras para Licencias Ocupadas son Correctas" if int(self.Dashboard_Licencias_Ocupadas) == int(self.Excel_Licencias_Ocupadas) else f"Las Cifras para Suscripcion son Incorrectas {self.Dashboard_Licencias_Ocupadas} != {self.Excel_Licencias_Ocupadas}"
-        print(self.result_Licencias_Ocupadas)
-
-        self.result_Login = "Las Cifras para Login son Correctas" if int(self.Dashboard_Login) == int(self.Excel_Login) else f"Las Cifras para Suscripcion son Incorrectas {self.Dashboard_Login} != {self.Excel_Login}"
-        print(self.result_Login)
-
-        self.result_Activos = "Las Cifras para Activos son Correctas" if int(self.Dashboard_Activos) == int(self.Excel_Activos) else f"Las Cifras para Suscripcion son Incorrectas {self.Dashboard_Activos} != {self.Excel_Activos}"
-        print(self.result_Activos)
+        for name, value_dashboard, value_excel, result in comparisons:
+            if value_dashboard == value_excel+1:
+                print(f"Las Cifras para {name} son Correctas")
+                setattr(self, f'result_{name}', "OK")
+            else:
+                print(f"Las Cifras para {name} son Incorrectas: {value_dashboard} != {value_excel}")
+                setattr(self, f'result_{name}', "NO OK")
+                self.flag_Difference_Detected = True
 
     def test_create_report(self):
+        # Specify the Report Path
+        with open(self.Download_path + f"\\Reporte Mensual de Usuarios de Claro Drive - {self.date}.txt", "w") as Reporte:
+            # Write the Report
+            Reporte.write("="*47 + "\n")
+            Reporte.write("     Reporte Mensual de Usuarios - Claro Drive\n")
+            Reporte.write("="*47 + "\n\n")
+            Reporte.write("Resultados de las Validaciones:\n")
+            Reporte.write("-" * 60 + "\n")
+            Reporte.write(f"1. Suscripción              : {self.result_Suscripcion} | {self.Dashboard_Suscripcion}         | {self.Excel_Suscripcion}\n")
+            Reporte.write(f"2. Licencias Vendidas       : {self.result_Licencias_Vendidas} | {self.Dashboard_Licencias_Vendidas}         | {self.Excel_Licencias_Vendidas}\n")
+            Reporte.write(f"3. Licencias Ocupadas       : {self.result_Licencias_Ocupadas} | {self.Dashboard_Licencias_Ocupadas}          | {self.Excel_Licencias_Ocupadas}\n")
+            Reporte.write(f"4. Login                    : {self.result_Login} | {self.Dashboard_Login}          | {self.Excel_Login}\n")
+            Reporte.write(f"5. Usuarios Activos         : {self.result_Activos} | {self.Dashboard_Activos}           | {self.Excel_Activos}\n")
+            Reporte.write("-" * 60 + "\n\n")
+            Reporte.write("Fin del Reporte.\n")
+            Reporte.write("="*50 + "\n")
+    
+    def test_send_email(self):
+        # Specify the Email Configuration
+        msg = EmailMessage()
+        # Specify the Subject - Title
+        # If Flags is True, We suffer an Invalid Numerical Figure
+        if self.flag_Difference_Detected:
+            msg["Subject"] = "Reporte Mensual de Usuarios de Claro Drive - NO OK"
+        else:
+            msg["Subject"] = "Reporte Mensual de Usuarios de Claro Drive - OK"
+        # Specify the Email Body
+        msg.set_content("Reciban un Saludo:\nEn el Archivo Adjunto recibirán las validaciones correspondientes al Reporte Mensual de Usuarios de CD.\n¡Saludos!\nDashboard: https://amco.cloud.looker.com/dashboards/1628")
+        msg["From"] = "pruebasl735@hotmail.com"
+        # List of multiple Recipients
+        recipients = ["cabreraemi@globalhitss.com"] # "sanchezgd@globalhitss.com", "bellaje@globalhitss.com", , "sanchezgd@globalhitss.com"
+        msg["To"] = ", ".join(recipients)
 
-        directorio_actual = os.getcwd()
-        print(f"El archivo se creará en la siguiente ruta: {directorio_actual}")
-        with open(self.Download_path + "\\resultados.txt", "w") as Reporte:
-            Reporte.write("Reporte Mensual de Usuarios de Claro Drive.\n")
-            Reporte.write(f"Resultado Suscripcion: {self.result_Suscripcion}\n")
-            Reporte.write(f"Resultado Licencias Vendidas: {self.result_Licencias_Vendidas}\n")
-            Reporte.write(f"Resultado Licencias Ocupadas: {self.result_Licencias_Ocupadas}\n")
-            Reporte.write(f"Resultado Login: {self.result_Login}\n")
-            Reporte.write(f"Resultado Activos: {self.result_Activos}\n")
+        with open(self.Download_path + f"\\Reporte Mensual de Usuarios de Claro Drive - {self.date}.txt", 'rb') as content_file:
+            # Read the Content of the File
+            content = content_file.read()
+            # Attach the File to the Email
+            msg.add_attachment(content, maintype='application', subtype='txt', filename='Resultados.txt')
+        # This module provides access to Transport Layer Security (often known as “Secure Sockets Layer”) encryption 
+        # and peer authentication facilities for network sockets, both client-side and server-side
+        context=ssl.create_default_context()
+
+        # Specify the Server
+        with smtplib.SMTP("smtp.office365.com", port=587) as smtp:
+            # Email Communication can be Encrypted with TLS
+            smtp.starttls(context = context)
+            # Enter User, Password
+            smtp.login(msg["From"], "Calidad007.")
+            # Send Email
+            smtp.send_message(msg)
