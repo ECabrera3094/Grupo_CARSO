@@ -44,20 +44,21 @@ class TestCases_Reporte_Mensual_Usuarios_CD():
         self.Excel_Suscripcion, self.Excel_Licencias_Vendidas, self.Excel_Licencias_Ocupadas = query_Excel_License_Sold(self.date)
 
     def test_get_login_activity_detail(self):
-        self.Excel_Login, self.Excel_Activos = query_Excel_Login_Activity_Detail('2024 Aug')
+        self.Excel_Login, self.Excel_Activos = query_Excel_Login_Activity_Detail(self.date)
 
     def test_validations(self):
 
         comparisons = [
-            ("Suscripcion", int(self.Dashboard_Suscripcion), int(self.Excel_Suscripcion), self.result_Suscripcion), 
-            ("Licencias_Vendidas", int(self.Dashboard_Licencias_Vendidas), int(self.Excel_Licencias_Vendidas), self.result_Licencias_Vendidas),
-            ("Licencias_Ocupadas", int(self.Dashboard_Licencias_Ocupadas), int(self.Excel_Licencias_Ocupadas), self.Dashboard_Licencias_Ocupadas),
-            ("Login", int(self.Dashboard_Login), int(self.Excel_Login), self.result_Login),
-            ("Activos", int(self.Dashboard_Activos), int(self.Excel_Activos), self.result_Activos),
+            ("Suscripcion", self.Dashboard_Suscripcion, self.Excel_Suscripcion), 
+            ("Licencias_Vendidas", self.Dashboard_Licencias_Vendidas, self.Excel_Licencias_Vendidas),
+            ("Licencias_Ocupadas", self.Dashboard_Licencias_Ocupadas, self.Excel_Licencias_Ocupadas),
+            ("Login", self.Dashboard_Login, self.Excel_Login),
+            ("Activos", self.Dashboard_Activos, self.Excel_Activos)
         ]
 
-        for name, value_dashboard, value_excel, result in comparisons:
-            if value_dashboard == value_excel+1:
+        for name, value_dashboard, value_excel in comparisons:
+            #print(str(value_dashboard) + "-----" + str(value_excel))
+            if int(value_dashboard) == int(value_excel):
                 print(f"Las Cifras para {name} son Correctas")
                 setattr(self, f'result_{name}', "OK")
             else:
@@ -82,7 +83,8 @@ class TestCases_Reporte_Mensual_Usuarios_CD():
             Reporte.write("-" * 60 + "\n\n")
             Reporte.write("Fin del Reporte.\n")
             Reporte.write("="*50 + "\n")
-    
+            Reporte.close()
+
     def test_send_email(self):
         # Specify the Email Configuration
         msg = EmailMessage()
@@ -96,7 +98,7 @@ class TestCases_Reporte_Mensual_Usuarios_CD():
         msg.set_content("Reciban un Saludo:\nEn el Archivo Adjunto recibirán las validaciones correspondientes al Reporte Mensual de Usuarios de CD.\n¡Saludos!\nDashboard: https://amco.cloud.looker.com/dashboards/1628")
         msg["From"] = "pruebasl735@hotmail.com"
         # List of multiple Recipients
-        recipients = ["cabreraemi@globalhitss.com"] # "sanchezgd@globalhitss.com", "bellaje@globalhitss.com", , "sanchezgd@globalhitss.com"
+        recipients = ["cabrerapereze@hotmail.com"] # "sanchezgd@globalhitss.com", "bellaje@globalhitss.com", , "sanchezgd@globalhitss.com"
         msg["To"] = ", ".join(recipients)
 
         with open(self.Download_path + f"\\Reporte Mensual de Usuarios de Claro Drive - {self.date}.txt", 'rb') as content_file:
