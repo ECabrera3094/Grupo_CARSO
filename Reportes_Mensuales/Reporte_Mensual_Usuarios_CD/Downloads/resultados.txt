@@ -1,6 +1,0 @@
-Reporte Mensual de Usuarios de Claro Drive.
-Resultado Suscripcion: Las Cifras para Suscripcion son Correctas
-Resultado Licencias Vendidas: Las Cifras para Licencias Vendidas son Correctas
-Resultado Licencias Ocupadas: Las Cifras para Licencias Ocupadas son Correctas
-Resultado Login: Las Cifras para Login son Correctas
-Resultado Activos: Las Cifras para Activos son Correctas
