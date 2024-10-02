@@ -8,7 +8,7 @@ class Claro(unittest.TestCase):
     def setUpClass(cls):
         pass
 
-    def test_Claro_Video(self):
+    def test_Reporte(self):
         print("\n=====> Inicia Creación de Reporte Mensual <=====")
         RMUCD = TestCases_Reporte_Mensual_Usuarios_CD()
         RMUCD.test_get_data_from_dashboard()
