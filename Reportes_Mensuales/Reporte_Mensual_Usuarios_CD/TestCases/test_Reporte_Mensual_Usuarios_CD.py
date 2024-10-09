@@ -1,6 +1,9 @@
-import ssl
-import smtplib 
-from email.message import EmailMessage
+import os
+import smtplib
+from email import encoders
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 from Queries.query_Dashboard_Reporte_Mensual import query_Dashboard
 from Queries.query_Excel_License_Sold import query_Excel_License_Sold
@@ -86,35 +89,57 @@ class TestCases_Reporte_Mensual_Usuarios_CD():
             Reporte.close()
 
     def test_send_email(self):
-        # Specify the Email Configuration
-        msg = EmailMessage()
+        from_email = 'usuarioshitsss@gmail.com'
+        password = 'sgxc uknf fibw xbfy'
+        report_file = self.Download_path + f"\\Reporte Mensual de Usuarios de Claro Drive - {self.date}.txt"
+
         # Specify the Subject - Title
         # If Flags is True, We suffer an Invalid Numerical Figure
         if self.flag_Difference_Detected:
-            msg["Subject"] = "Reporte Mensual de Usuarios de Claro Drive - NO OK"
+            subject = "Reporte Mensual de Usuarios de Claro Drive - NO OK"
         else:
-            msg["Subject"] = "Reporte Mensual de Usuarios de Claro Drive - OK"
+            subject = "Reporte Mensual de Usuarios de Claro Drive - OK"
         # Specify the Email Body
-        msg.set_content("Reciban un Saludo:\nEn el Archivo Adjunto recibirán las validaciones correspondientes al Reporte Mensual de Usuarios de CD.\n¡Saludos!\nDashboard: https://amco.cloud.looker.com/dashboards/1628")
-        msg["From"] = "pruebasl735@hotmail.com"
-        # List of multiple Recipients
-        recipients = ["cabrerapereze@hotmail.com"] # "sanchezgd@globalhitss.com", "bellaje@globalhitss.com", , "sanchezgd@globalhitss.com"
-        msg["To"] = ", ".join(recipients)
+        body = "Reciban un Saludo:\nEn el Archivo Adjunto recibirán las validaciones correspondientes al Reporte Mensual de Usuarios de CD.\n¡Saludos!\nAtte: Emiliano <3\nDashboard: https://amco.cloud.looker.com/dashboards/1628"
 
-        with open(self.Download_path + f"\\Reporte Mensual de Usuarios de Claro Drive - {self.date}.txt", 'rb') as content_file:
-            # Read the Content of the File
-            content = content_file.read()
-            # Attach the File to the Email
-            msg.add_attachment(content, maintype='application', subtype='txt', filename='Resultados.txt')
-        # This module provides access to Transport Layer Security (often known as “Secure Sockets Layer”) encryption 
-        # and peer authentication facilities for network sockets, both client-side and server-side
-        context=ssl.create_default_context()
+        """
+        MIMEMultipart es una clase en el módulo email.mime.multipart de Python que se utiliza para crear mensajes de correo electrónico 
+        que contienen contenido mixto. Esto es especialmente útil cuando deseas enviar un correo que tenga tanto texto como
+        archivos adjuntos, o diferentes tipos de contenido como texto plano y adjuntos HTML.
+        """
+        msg = MIMEMultipart()
+        msg['From'] = from_email
+        msg['To'] = 'cabreraemi@globalhitss.com'
+        msg['Subject'] = subject
+
+        # Especifica que el tipo de contenido es texto plano sin ningún tipo de formato como HTML.
+        msg.attach(MIMEText(body, 'plain'))
+
+        # Attach the File to the Email
+        # rb - Read Binary lecture Mode
+        with open(report_file, 'rb') as attachment:
+            """
+            MIMEBASE : Clase base que se usa para manejar archivos genéricos/binarios en email, como documentos, archivos comprimidos, o cualquier tipo de archivo adjunto.
+            'application': Indica que el archivo adjunto es de tipo "application", para archivos que no son solo texto (TXT, PDF, imágenes).
+            'octet-stream': Indica que es un flujo de datos binarios (no texto), para cualquier tipo de archivo que no sea texto simple.
+            """
+            part = MIMEBase('application', 'octet-stream')
+            # Lee el contenido binario del archivo abierto y lo establece como el "payload" (carga útil) de la parte MIME.
+            part.set_payload(attachment.read())
+            # Base64 convierte datos binarios en texto seguro para la transmisión.
+            encoders.encode_base64(part)
+            # Add a Header
+            part.add_header('Content-Disposition', # Informs the mail client that this is an attachment.
+                            f'attachment; filename = {os.path.basename(report_file)}' # The attachment is just a file withoute the complete path.
+                            )
+            msg.attach(part)
 
         # Specify the Server
-        with smtplib.SMTP("smtp.office365.com", port=587) as smtp:
-            # Email Communication can be Encrypted with TLS
-            smtp.starttls(context = context)
-            # Enter User, Password
-            smtp.login(msg["From"], "Calidad007.")
-            # Send Email
-            smtp.send_message(msg)
+        try:
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+                # Enter User, Password
+                server.login(from_email, password)
+                server.send_message(msg)
+                print("Envío de Email Exitoso!")
+        except Exception as e:
+            print(f"Error al Enviar el Email: {e}")
