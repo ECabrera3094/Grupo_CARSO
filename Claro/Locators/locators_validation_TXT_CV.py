@@ -1,6 +1,7 @@
 class Locators_validation_TXT_CV():
-
+    
     Loocker_URL = "https://amco.cloud.looker.com/login"
+    Loocker_URL_Archivos_Operaciones_CV = "https://amco.cloud.looker.com/dashboards/813"
     Loocker_user = "datos_qa.cmx@clarovideotv.com"
     Loocker_password = "89Fu8B;48:0Y"
     list_Countries = ['ARGENTINA',
@@ -52,22 +53,37 @@ class Locators_validation_TXT_CV():
                     }
 					
     dict_File_per_Operation = {
-                        'ARGENTINA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'BRASIL' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados','Visualizaciones'],
-                        'MEXICO' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Temporada', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados','Visualizaciones'],
-                        'CHILE' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'COLOMBIA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'COSTARICA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'DOMINICANA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'ECUADOR' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'ELSALVADOR' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'GUATEMALA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'HONDURAS' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'NICARAGUA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'PANAMA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'PARAGUAY' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'PERU' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
-                        'URUGUAY' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'Visualizaciones']
+                    'ARGENTINA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'BRASIL' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados','Visualizaciones'],
+                    'MEXICO' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Temporada', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados','Visualizaciones'],
+                    'CHILE' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'COLOMBIA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'COSTARICA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'DOMINICANA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'ECUADOR' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'ELSALVADOR' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'GUATEMALA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'HONDURAS' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'NICARAGUA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'PANAMA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'PARAGUAY' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'PERU' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
+                    'URUGUAY' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones',  'Usuarios', 'Usuarios_Eliminados', 'Visualizaciones']
+                    }
+
+    dict_Mandatory_Columns_per_Operation = {
+                    'Catalogo': ['ID_GRUPO', "TITULO", "TITULO_ESP", "CATEGORIA"],
+                    # Para el caso de MX, adicionalmente se debe realizar la siguiente validación:
+                    # Filtrar desde el campo MEDIO_PAGO_NOMBRE por "Recibo Telmex" y verificar que el campo PRODUCTO_ID, no venga vacío y que todos los nombres finalicen con "CL"
+                    'Suscripciones': ["PAIS", "ID_CLIENTE", "COD_PARTNER_OPERACION", "COD_FECHA_SUSCRIPCION", "COD_FECHA_SUSC_PAIS", "PRECIO", "ABONO", "TX_SUSCRIPCION", "MEDIO_PAGO_NOMBRE", "CANT_RENOVACIONES", "USUARIO_PERFIL", "USUARIO_PRUEBA"],
+                    'SuscripcionesDiarias' : [],
+                    'Temporada' : ["PAIS", "COD_PARTNER_OPERACION", "ID_CLIENTE", "FECHA_PAIS", "TX_ESTUDIO", "COD_TEMPORADA", "TITULO", "TEMPORADA", "CAPITULOS", "TYPE", "ABONO" ,"MEDIO_PAGO_NOMBRE", "PRECIO", "BONIFICADO", "TX_CUENTA", "TIPO_USUARIO"],
+                    'Transacciones' : ["PAIS", "COD_PARTNER_OPERACION", "ID_CLIENTE", "FECHA_PAIS", "TX_ESTUDIO", "ID_GRUPO", "TITULO", "TYPE", "ABONO","MEDIO_PAGO_NOMBRE", "PRECIO", "USUARIO_PERFIL", "USUARIO_PRUEBA"],
+                    'Usuarios' : ["PAIS", "ID_CLIENTE", "NOMBRE_COMPLETO", "TX_MAIL", "COD_FECHA_ALTA", "COD_ORIGEN_ALTA", "USUARIO_ALTA", "USUARIO_PRUEBA"],
+                    'Usuarios_Eliminados' : ["PAIS", "ID_CLIENTE", "NOMBRE_COMPLETO", "TX_MAIL", "COD_FECHA_ALTA", "COD_ORIGEN_ALTA", "USUARIO_ALTA", "USUARIO_PRUEBA"],
+                    'UsuariosInactivos' : [],
+                    'UsuariosSinCustomerId' : [],
+                    'Visualizaciones' : ["PAIS"]
                     }
 
     id_textbox_user = "login-email"
@@ -88,7 +104,7 @@ class Locators_validation_TXT_CV():
     xpath_clear_cache_update = "/html/body/div[3]/div/div/div/div/div/ul/li[1]/button/div[2]/span"
     xpath_descargar_archivo_button = "/html/body/div[2]/div/div/div/div/section/div/div[2]/div[1]/div/div[2]/div/section/div/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div[1]/div[4]/div/span/div/div/span/span/a/button"
     # 14
-    #xpath_descargar_archivo_button = "/html/body/div[2]/div/div/div/div/section/div/div[2]/div[1]/div/div[2]/div/section/div/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div[3]/div[4]/div/span/div/div/span/span/a/button"
+    #xpath_descargar_archivo_button ="/html/body/div[2]/div/div/div/div/section/div/div[2]/div[1]/div/div[2]/div/section/div/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]/div/div/div[3]/div[4]/div/span/div/div/span/span/a/button"
 
     Drivers_path = "C:\\Automation\\Claro\\Drivers\\chromedriver.exe"
     Download_path = "C:\\Automation\\Claro\\Downloads_CV"

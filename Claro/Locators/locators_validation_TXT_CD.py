@@ -1,6 +1,7 @@
 class Locators_validation_TXT_CD():
 
     Loocker_URL = "https://amco.cloud.looker.com/login"
+    Loocker_URL_Archivos_Operaciones_CD = "https://amco.cloud.looker.com/dashboards/506"
     Loocker_user = "datos_qa.cmx@clarovideotv.com"
     Loocker_password = "89Fu8B;48:0Y"
     list_Countries = ['ARGENTINA',
