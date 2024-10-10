@@ -10,13 +10,14 @@ import pyarrow.parquet
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
+#from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.action_chains import ActionChains
+#from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 
+# Locators
 from Locators.locators_validation_TXT_CD import Locators_validation_TXT_CD
 
 class TestCases_validation_TXT_CD():
@@ -25,6 +26,7 @@ class TestCases_validation_TXT_CD():
         self.Drivers_path = Locators_validation_TXT_CD.Drivers_path
 
         self.Loocker_URL = Locators_validation_TXT_CD.Loocker_URL
+        self.Loocker_URL_Archivos_Operaciones_CD = Locators_validation_TXT_CD.Loocker_URL_Archivos_Operaciones_CD
         self.Loocker_user = Locators_validation_TXT_CD.Loocker_user
         self.Loocker_password = Locators_validation_TXT_CD.Loocker_password
         self.list_Countries = Locators_validation_TXT_CD.list_Countries
@@ -87,33 +89,26 @@ class TestCases_validation_TXT_CD():
         driver.find_element(By.ID, self.id_loging_button).click()
         #---
         time.sleep(15)
-        # Click on "Reportes Homologados" Link
-        driver.find_element(By.XPATH, self.xpath_reportes_homologados_link).click()
-        time.sleep(5)
-        # Click on "Claro Drive" Link
-        driver.find_element(By.XPATH, self.xpath_claro_drive_link).click()
-        time.sleep(5)
-        # Click on "Claro Drive Masivo" Link
-        driver.find_element(By.XPATH, self.xpath_claro_drive_masivo).click()
-        time.sleep(5)
-        # Click on "Archivos TXT" Link
-        driver.find_element(By.XPATH, self.xpath_archivos_txt_link).click()
-        time.sleep(5)
-        # Click on "Archivos de Operaciones CD" Link
-        driver.find_element(By.XPATH, self.xpath_archivos_operaciones_cd_link).click()
-        time.sleep(15)
+        driver.get(self.Loocker_URL_Archivos_Operaciones_CD)
+        # Validate the correct Dashboard based on the Country Button. 
+        try:
+            WebDriverWait(driver, 15).until(
+                EC.visibility_of_element_located((By.XPATH, self.xpath_pais_button))
+            )
+        except TimeoutException as toe:
+            print("Timeout Error on Loading Page: ", toe)
         # --------------------------------
         # Start the Loop of Countries
         # === Start on Argentin and ends of Uruguay.
         i = 1
-        for _ in itertools.repeat(None, 17):
+        for _ in itertools.repeat(None, len(self.list_Countries)):
             # Click on "Pais" Button
             driver.find_element(By.XPATH, self.xpath_pais_button).click()
             time.sleep(2)
             # Click on "X" if you have already a Countrie on the Field.
             try:
                 driver.find_element(By.XPATH, self.xpath_close_pais ).click()
-            except:
+            except Exception:
                 pass
             # Click on the Listbox
             driver.find_element(By.XPATH, self.xpath_listbox_pais).click() 
@@ -137,19 +132,19 @@ class TestCases_validation_TXT_CD():
         # --------------------------------
         # Checking the Download Process
         wait = True
-        while(wait == True):
+        while(wait):
             # Returns an Array with the Full Path of each element inside.
             chrome_temp_file = sorted(Path(self.Download_path).glob('*.crdownload'))
             firefox_temp_file = sorted(Path(self.Download_path).glob('*.part'))
             print("Array: ", len(chrome_temp_file))
             # If the Array contains more than one .crdownload File, we have to wait
             if (len(chrome_temp_file) >= 1 or len(firefox_temp_file) >= 1):
-                print('dDownloading Files ...')
+                print('Descargando Archivos ...')
                 time.sleep(30)
             else:
                 # Break the Loop.
                 wait = False
-        print('Finished Downloading All Files ...')
+        print('Descarga de Archivos Finalizada ...')
         # --------------------------------
         # End of Session
         driver.close()
@@ -158,7 +153,7 @@ class TestCases_validation_TXT_CD():
     def unzip_Compressed_Files(self):
         print("=====> Inicia Descompresion de Archivos de Claro Drive<=====\n")
         # Obtain the DateTime and Replace the "-" symbol. 
-        # Claro Drive SIEMPRE se revisa UN DIA anterior.
+        # Claro Drive SIEMPRE se revisa UN DIA ANTERIOR.
         today = str(datetime.date.today() - datetime.timedelta(days = 1)).replace("-","")
         #today = str(20240921)
         # ----- Enter the Zip File
@@ -172,21 +167,17 @@ class TestCases_validation_TXT_CD():
                 # Loading the temp.zip and creating a Zip Object 
                 with zipfile.ZipFile(self.Download_path + '\\txt_' + country + '_' + today +'.zip', 'r') as zipObject:
                     zipObject.extractall(path = new_Download_Directory)
-                
-                print("Pais: ", country, " OK\n")
-            except:
-                print("Pais: ", country, " FAIL\n")
+                print("País: ", country, " OK\n")
+            except Exception:
+                print("País: ", country, " FAIL\n")
 
         print("Validacion de Duplicidad.\n")
-
         self.validate_duplicity(self.list_Countries, self.list_TXT_Operations_Files, today)
 
         print("Validación de la Cantidad de Archivos.")
-
         self.validate_number_of_files(self.list_Countries, self.dict_Number_of_Files, self.Download_path, today)
 
         print("Validacioin de los Archivos por Operación.")
-
         self.validate_count_files_per_operation(self.list_Countries, self.dict_File_per_Operation, self.Download_path, today)
 
         print("Validacion de 17 Paises.\n")
@@ -236,9 +227,11 @@ class TestCases_validation_TXT_CD():
                     # Close MD5 File
                     md5_file.close()
 
-                except:
+                except Exception:
                     pass
             print("\n")
+
+    # ----- Validations -----
 
     def convert_CSV_to_Parquet(self, csv_file_path, parquet_file_path):
         # Symbol that Delimit each Element of the Frame
@@ -246,76 +239,47 @@ class TestCases_validation_TXT_CD():
         table = csv.read_csv(csv_file_path, parse_options = csv.ParseOptions(delimiter = delmt))
         # Save the Parquet File
         pyarrow.parquet.write_table(table, parquet_file_path)         
-    
-    def validate_duplicity(self, list_Countries, list_TXT_Operations_Files, today):
 
+    def validate_duplicity(self, list_Countries, list_TXT_Operations_Files, today):
         try:
             for country in list_Countries:
-                
                 for title_Operation in list_TXT_Operations_Files:
-
                     new_Download_Directory = "C:\\Automation\\Claro\\Downloads_CV" + '\\txt_' + country + '_' + today
-
                     nombre_base = title_Operation + '_' +  country + '_' + today + ".csv"
-
                     contador = 0
-
                     nombre_archivo = new_Download_Directory + '\\' + title_Operation + '_' +  country + '_' + today + ".csv" 
-
                     contador = sum(1 for nombre_archivo in os.listdir(new_Download_Directory) if nombre_archivo.startswith(nombre_base))
-
-                    # if contador == 1:
-                    #     print(f"El archivo base '{nombre_base}' aparece {contador} veces.")
-                    # elif contador >= 2:
-                    #     print(f"El archivo base '{nombre_base}' aparece {contador} veces.")
-                    # elif contador == 0:
-                    #     print(f"El archivo base '{nombre_base}' aparece {contador} veces.")
-
                     try:
                         assert contador <= 1
                     except AssertionError as e:
                         print(f"Error de Assert: {e}")
-
-        except:
+        except Exception:
             pass
 
     def validate_number_of_files(self, list_Countries, dict_Number_of_Files, Download_path, today):
-
         for country in list_Countries:
-
             # Get the Number of Files for the each Country
             new_Download_Directory = Download_path + '\\txt_' + country + '_' + today
-
             file_list = os.listdir(new_Download_Directory)
-
             # Filter Files Only (Excludes Directories)
             files = len([f for f in file_list if os.path.isfile(os.path.join(new_Download_Directory, f))])
-
-            assert files == dict_Number_of_Files[country], f"Error en {country} tiene un número no permitido de archivos: {files}"
-        
+            assert files == dict_Number_of_Files[country], f"Error en {country} tiene un número no permitido de archivos: {files}"     
         print("La Cantidad de Archivos por País son Válidas.\n")
 
     def validate_count_files_per_operation(self, list_Countries, dict_File_per_Operation, Download_path, today):
-        
         for country in list_Countries:
-
             tuple_Valid_Numbers_of_Files_per_Operation = {3, 6}
-
             # Get the Number of Files for the each Country
             new_Download_Directory = Download_path + '\\txt_' + country + '_' + today
-
             # Creo un Conjunto de TODOS los Archivos en el nuevo Directorio 
             file_list = os.listdir(new_Download_Directory)
-
             # Obtengo los Nombres de los Archivos esperados para el País
             expected_files = list(dict_File_per_Operation.get(country, [])) # Obtengo el Valor gracias a la Key
-
             for expected_file in expected_files:
-
                 # Buscar archivos en archivos_encontrados que comiencen con expected_file y terminen con cualquier extensión
                 found = [file for file in file_list if file.startswith(f"{expected_file}_")]
-
                 # Verificar que el número de archivos encontrados sea válido
                 assert len(found) in tuple_Valid_Numbers_of_Files_per_Operation, f"Error: {expected_file} en {country} tiene un número no permitido de archivos: {len(found)}"
+        print("Todos los Archivos por Operación son Válidos.\n")
 
         print("Todos los Archivos por Operación son Válidos.\n")
