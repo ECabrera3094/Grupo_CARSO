@@ -158,7 +158,7 @@ class TestCases_validation_TXT_CV():
         print("\n=====> Inicia Descompresion de Archivos de Claro Video<=====\n")
         # Obtain the DateTime and Replace the "-" symbol. 
         today = str(datetime.date.today()).replace("-","")
-        #today = str(20240922)
+        #today = str(20241012)
         # ----- Enter the Zip File
         # Validate the 16 Countries
         for country in self.list_Countries:

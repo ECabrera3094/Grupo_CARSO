@@ -155,7 +155,7 @@ class TestCases_validation_TXT_CD():
         # Obtain the DateTime and Replace the "-" symbol. 
         # Claro Drive SIEMPRE se revisa UN DIA ANTERIOR.
         today = str(datetime.date.today() - datetime.timedelta(days = 1)).replace("-","")
-        #today = str(20240921)
+        #today = str(20241012)
         # ----- Enter the Zip File
         # Validate the 16 Countries
         for country in self.list_Countries:
