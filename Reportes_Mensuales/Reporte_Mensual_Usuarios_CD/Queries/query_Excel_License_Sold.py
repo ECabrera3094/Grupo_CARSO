@@ -2,6 +2,9 @@ from google.cloud import bigquery
 
 def query_Excel_License_Sold(date):
     # Crea un cliente de BigQuery
+    #client = bigquery.Client(project="amco-cv-prod") # Solo aplica a Proyectos en la Nube.
+
+    # Crea un cliente de BigQuery
     client = bigquery.Client()
 
     # Ejecuta la consulta
