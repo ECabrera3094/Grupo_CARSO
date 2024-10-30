@@ -9,7 +9,9 @@ class Locators_Reportes_Mensual_Usuarios_CD():
         new_date = f"{year} {month}"
         return new_date
 
+    #Download_path = "/tmp/" # Sólo aplica al Proyecto en la Nube
     Download_path = "C:\\Automation\\Reportes_Mensuales\\Reporte_Mensual_Usuarios_CD\\Downloads"
+
 
     Dashboard_Suscripcion = 0
     Excel_Suscripcion = 0
