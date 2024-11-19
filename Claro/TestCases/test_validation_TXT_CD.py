@@ -90,6 +90,7 @@ class TestCases_validation_TXT_CD():
         #---
         time.sleep(15)
         driver.get(self.Loocker_URL_Archivos_Operaciones_CD)
+        
         # Validate the correct Dashboard based on the Country Button. 
         try:
             WebDriverWait(driver, 15).until(
@@ -97,6 +98,7 @@ class TestCases_validation_TXT_CD():
             )
         except TimeoutException as toe:
             print("Timeout Error on Loading Page: ", toe)
+        time.sleep(15)
         # --------------------------------
         # Start the Loop of Countries
         # === Start on Argentin and ends of Uruguay.

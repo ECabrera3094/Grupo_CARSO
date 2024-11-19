@@ -93,7 +93,7 @@ class TestCases_validation_TXT_CV():
         #---
         time.sleep(15)
         driver.get(self.Loocker_URL_Archivos_Operaciones_CV)
-        #time.sleep(10)
+        time.sleep(10)
         # Validate the correct Dashboard based on the Country Button. 
         try:
             WebDriverWait(driver, 15).until(
