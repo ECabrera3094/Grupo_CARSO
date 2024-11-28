@@ -70,6 +70,16 @@ class Locators_validation_TXT_CD():
                     'URUGUAY' : ['Consumos', 'Estado_Medio_Pago', 'Suscripciones', 'Usuarios', 'Usuarios_Eliminados']
                 }
 
+    dict_Mandatory_Columns_per_Operation = {
+                    'Consumo' : ['PAIS','ID_CLIENTE','FECHA_EXTRACCION','ESPACIO_ASIGNADO','ESPACIO_CONSUMIDO','NRO_ARCHIVOS_BUZON','NRO_ARCHIVOS_COMPARTIDOS','NRO_ARCHIVOS_CREADOS','NROS_ARCHIVOS_LEIDOS','NOMBRE_SO'],
+                    'Estado_Medio_Pago': ['PAIS','ID_CLIENTE','MSISDN','FECHA_ALTA','MEDIO_PAGO_NOMBRE','COD_ORIGEN_PAGO','TX_ORIGEN_PAGO','PAQUETE','ESTADO_MEDIO_PAGO'],
+                    # Para el caso de MX, adicionalmente se debe realizar la siguiente validación:
+                    # Filtrar desde el campo MEDIO_PAGO_NOMBRE por "Recibo Telmex" y verificar que el campo PRODUCTO_ID, no venga vacío y que todos los nombres finalicen con "CL"
+                    'Suscripciones' : ["PAIS", "ID_CLIENTE","COD_PARTNER_OPERACION",'COD_FECHA_SUSC_PAIS','PRECIO','ABONO','TX_SUSCRIPCION','MEDIO_PAGO_NOMBRE','TX_CUENTA','COD_ORIGEN_PAGO','TX_ORIGEN_PAGO','COD_ORIGEN_ACCION','TX_ACCION','CANT_RENOVACIONES','USUARIO_ALTA','PAQUETE'],
+                    'Usuarios' : ['PAIS','ID_CLIENTE','NOMBRE_COMPLETO','TX_MAIL','COD_FECHA_ALTA','COD_FECHA_TERM_ACEPT','COD_ORIGEN_ALTA','TX_ORIGEN_ALTA','USUARIO_ALTA','ID_ADMIN'],
+                    'Usuarios_Eliminados' : ['ID_CLIENTE','NOMBRE_COMPLETO','TX_MAIL','COD_FECHA_ALTA','COD_FECHA_TERM_ACEPT','COD_ORIGEN_ALTA','TX_ORIGEN_ALTA','USUARIO_ALTA','COD_FECHA_BAJA']
+                    }
+
     id_textbox_user = "login-email"
     id_textbox_password = "login-password"
     id_loging_button = "login-submit"
