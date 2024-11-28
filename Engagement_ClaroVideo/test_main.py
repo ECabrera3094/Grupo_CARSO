@@ -11,6 +11,4 @@ def test_basic_search(page: Page):
     send_email.engagement_ClaroDrive()
     send_email.engagement_ClaroConnect()
 
-# python -m pytest main.py --html=reporte.html
-
-# https://pypi.org/project/pytest-html-reporter/
+# python -m pytest test_main.py
