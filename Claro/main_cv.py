@@ -1,5 +1,5 @@
 import unittest
-import pytest
+
 from TestCases.test_validation_TXT_CV import TestCases_validation_TXT_CV
 
 class Claro(unittest.TestCase):
@@ -19,5 +19,5 @@ class Claro(unittest.TestCase):
         pass
 
 if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'])
-    #python -m pytest main.py --html=reporte.html --self-contained-html
+    unittest.main()
+    #python -m pytest main_cv.py --html=reporte_CV.html --self-contained-html

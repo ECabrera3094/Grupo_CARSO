@@ -1,6 +1,5 @@
 import unittest
 
-from TestCases.test_validation_TXT_CV import TestCases_validation_TXT_CV
 from TestCases.test_validation_TXT_CD import TestCases_validation_TXT_CD
 
 class Claro(unittest.TestCase):
@@ -11,8 +10,6 @@ class Claro(unittest.TestCase):
     
     def test_Claro_Video(self):
         print("=====> Inicio del TestCase <=====")
-        #tc_cv = TestCases_validation_TXT_CV()
-        #tc_cv.start()
         tc_cd = TestCases_validation_TXT_CD()
         tc_cd.start()
         print("=====> Fin del TestCase <=====")
@@ -23,4 +20,4 @@ class Claro(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    #python -m pytest main.py --html=reporte.html --self-contained-html
+    #python -m pytest main_cd.py --html=reporte_CD.html --self-contained-html
