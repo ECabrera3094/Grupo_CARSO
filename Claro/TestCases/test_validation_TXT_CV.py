@@ -289,7 +289,6 @@ class TestCases_validation_TXT_CV():
         print("Todos los Archivos por Operación son Válidos.\n")
 
     def validate_mandatory_columns_per_operation(self, list_Countries, list_TXT_Operations_Files, dict_Mandatory_Columns_per_Operation, Download_path, today):
-        
         for country in list_Countries:
             print("\n\nPais: ", country, "\n")
             # Get the Directory for Each Country

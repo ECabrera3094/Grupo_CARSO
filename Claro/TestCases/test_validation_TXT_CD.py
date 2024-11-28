@@ -33,6 +33,7 @@ class TestCases_validation_TXT_CD():
         self.list_TXT_Operations_Files = Locators_validation_TXT_CD.list_TXT_Operations_Files
         self.dict_Number_of_Files = Locators_validation_TXT_CD.dict_Number_of_Files
         self.dict_File_per_Operation = Locators_validation_TXT_CD.dict_File_per_Operation
+        self.dict_Mandatory_Columns_per_Operation = Locators_validation_TXT_CD.dict_Mandatory_Columns_per_Operation
 
         self.id_textbox_user = Locators_validation_TXT_CD.id_textbox_user
         self.id_textbox_password = Locators_validation_TXT_CD.id_textbox_password
@@ -153,7 +154,7 @@ class TestCases_validation_TXT_CD():
         driver.quit()
 
     def unzip_Compressed_Files(self):
-        print("=====> Inicia Descompresion de Archivos de Claro Drive<=====\n")
+        print("\n=====> Inicia Descompresion de Archivos de Claro Drive<=====\n")
         # Obtain the DateTime and Replace the "-" symbol. 
         # Claro Drive SIEMPRE se revisa UN DIA ANTERIOR.
         today = str(datetime.date.today() - datetime.timedelta(days = 1)).replace("-","")
@@ -181,6 +182,9 @@ class TestCases_validation_TXT_CD():
 
         print("Validacioin de los Archivos por Operación.")
         self.validate_count_files_per_operation(self.list_Countries, self.dict_File_per_Operation, self.Download_path, today)
+
+        print("Validación de las Columnas Obligatorias por Operación.")
+        self.validate_mandatory_columns_per_operation(self.list_Countries, self.list_TXT_Operations_Files, self.dict_Mandatory_Columns_per_Operation, self.Download_path, today)
 
         print("Validacion de 17 Paises.\n")
         # Validate the 16 Countries
@@ -284,4 +288,25 @@ class TestCases_validation_TXT_CD():
                 assert len(found) in tuple_Valid_Numbers_of_Files_per_Operation, f"Error: {expected_file} en {country} tiene un número no permitido de archivos: {len(found)}"
         print("Todos los Archivos por Operación son Válidos.\n")
 
-        print("Todos los Archivos por Operación son Válidos.\n")
+    def validate_mandatory_columns_per_operation(self, list_Countries, list_TXT_Operations_Files, dict_Mandatory_Columns_per_Operation, Download_path, today):
+        for country in list_Countries:
+            print("\n\nPais: ", country, "\n")
+            # Get the Directory for Each Country
+            new_Download_Directory = Download_path + '\\txt_' + country + '_' + today
+            # Get Each Operation
+            for title_Operation in list_TXT_Operations_Files:
+                print("Operacion: ", title_Operation)
+                try:
+                    expected_Columns = dict_Mandatory_Columns_per_Operation.get(title_Operation, [])
+                    # Read the Parquet File 
+                    df = pd.read_csv(new_Download_Directory + '\\' + title_Operation + '_' + country + '_' + today + '.csv', engine = 'pyarrow', sep = '|') # , engine = 'pyarrow', sep = '|'
+                    df = (df[expected_Columns].isna().sum())
+                    if (df >= 1).any():
+                        for index, value in df.items():
+                            if value >= 1:
+                                print(f"El Campo {index} en {title_Operation} para {country} tiene {value} Elementos Vacío")
+                    else:
+                        print(f"Todos los Valores en {title_Operation} para {country} son Correctos.")
+                except Exception:
+                    print("---> CATCH")
+                    pass
