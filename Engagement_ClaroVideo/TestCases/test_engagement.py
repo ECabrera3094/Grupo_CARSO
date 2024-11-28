@@ -1,4 +1,4 @@
-#import json
+import json
 import time
 from playwright.sync_api import Page
 
@@ -10,6 +10,11 @@ class Engagement:
         self.page = page
         self.URL = Locators_Engagement.URL
         self.email = Locators_Engagement.email
+        self.keys_ClaroVideo = Locators_Engagement.keys_ClaroVideo
+        self.keys_ClaroMusic = Locators_Engagement.keys_ClaroMusic
+        self.Keys_ClaroDrive = Locators_Engagement.Keys_ClaroDrive
+        self.keys_ClaroConnect = Locators_Engagement.keys_ClaroConnect
+        self.region = Locators_Engagement.region
         self.variables = Locators_Engagement.variables
 
     def navigate(self):
@@ -19,11 +24,9 @@ class Engagement:
 
         self.page.locator("id=emails").fill(self.email)
 
-        self.page.locator("id=keys").fill('cv-welcome\ncv-passwordreminder\ncv-change-password-success\ncv-activatecontrolpin\ncv-remembercontrolpin\ncv-newlogin-notification')
-        #self.page.locator("id=keys").fill('email_susc_telmexmexico_abono_universal_plus_uruguay_amcogate_0\nemail_susc_telmexmexico_abono_universal_plus_uruguay_hubgate_0\nemail_susc_telmexmexico_abono_universal_plus_uruguay_promogate_0\nemail_susc_telmexmexico_abono_universal_plus_uruguay_hubgate_0_70007061\nemail_cancel_telmexmexico_abono_universal_plus_uruguay_hubgate_1200\nemail_cancel_telmexmexico_abono_universal_plus_uruguay_amcogate_1200\nemail_cancel_telmexmexico_abono_universal_plus_uruguay_promogate_1200')
-
-        self.page.locator("id=regions").fill("MX")
-        #self.page.locator("id=regions").fill("UY")
+        self.page.locator("id=keys").fill(self.keys_ClaroVideo)
+        
+        self.page.locator("id=regions").fill(self.region)
 
         self.page.locator("id=partner").select_option("CLAROVIDEO")
         
@@ -32,6 +35,7 @@ class Engagement:
         La función json.dumps() en Python convierte un objeto de Python (como un diccionario) en una cadena de texto en formato JSON. 
         Al establecer ensure_ascii=False, indicas que los caracteres especiales deben mostrarse tal como están, sin convertirlos a secuencias de escape.
         '''
+        
         #json_string_variables = json.dumps(self.variables, ensure_ascii=False)
         #self.page.locator("id=variables").fill(json_string_variables)
 
@@ -41,15 +45,15 @@ class Engagement:
 
         time.sleep(10)
         
-        self.page.screenshot(path="ClaroVideo_screenshot03.png")
+        self.page.screenshot(path="ClaroVideo.png")
 
     def engagement_ClaroMusica(self):
 
         self.page.locator("id=emails").fill(self.email)
 
-        self.page.locator("id=keys").fill("cm-welcome-jwt")
+        self.page.locator("id=keys").fill(self.keys_ClaroMusic)
 
-        self.page.locator("id=regions").fill("MX")
+        self.page.locator("id=regions").fill(self.region)
 
         self.page.locator("id=partner").select_option("CLAROMUSICA")
 
@@ -59,15 +63,15 @@ class Engagement:
 
         time.sleep(10)
 
-        self.page.screenshot(path="ClaroMusica_screenshot03.png")
+        self.page.screenshot(path="ClaroMusica.png")
 
     def engagement_ClaroDrive(self):
         
         self.page.locator("id=emails").fill(self.email)
 
-        self.page.locator("id=keys").fill("cb_welcome\ncd-recovery-password")
+        self.page.locator("id=keys").fill(self.Keys_ClaroDrive)
 
-        self.page.locator("id=regions").fill("MX")
+        self.page.locator("id=regions").fill(self.region)
 
         self.page.locator("id=partner").select_option("CLARODRIVE")
 
@@ -77,15 +81,15 @@ class Engagement:
 
         time.sleep(10)
 
-        self.page.screenshot(path="ClaroDrive_screenshot03.png")
+        self.page.screenshot(path="ClaroDrive.png")
 
     def engagement_ClaroConnect(self):
 
         self.page.locator("id=emails").fill(self.email)
 
-        self.page.locator("id=keys").fill("cc-emails-remember\ncc-emails-invite\ncc-emails-forgotpw\ncc-emails-cancel")
+        self.page.locator("id=keys").fill(self.keys_ClaroConnect)
 
-        self.page.locator("id=regions").fill("MX")
+        self.page.locator("id=regions").fill(self.region)
 
         self.page.locator("id=partner").select_option("CLAROCONNECT")
 
@@ -95,4 +99,4 @@ class Engagement:
 
         time.sleep(10)
 
-        self.page.screenshot(path="ClaroConnect_screenshot03.png")
+        self.page.screenshot(path="ClaroConnect.png")
