@@ -8,9 +8,10 @@ class Locators_Engagement:
 
     email = "pruebasl735@gmail.com"
 
-    region = "MX"
+    region = "PY"
 
     keys_ClaroVideo = ['cv-welcome', 'cv-passwordreminder', 'cv-change-password-success', 'cv-activatecontrolpin', 'cv-remembercontrolpin', 'cv-newlogin-notification']
+    #keys_ClaroVideo = ['email_cancel_universal_plus_paraguay_amcogate','email_cancel_universal_plus_paraguay_hubfacturafijagate','email_cancel_universal_plus_paraguay_hubgate']
     keys_ClaroVideo = transform_Keys(keys_ClaroVideo)
 
     keys_ClaroMusic = ["cm-welcome-jwt"]
