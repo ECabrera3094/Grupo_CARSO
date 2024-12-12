@@ -1,0 +1,482 @@
+WITH operaciones_txt AS (
+    WITH Q AS (
+        SELECT A.*,
+            ROW_NUMBER() OVER (PARTITION BY ARCHIVO ORDER BY VENCIMIENTO DESC) AS RANK
+        FROM amco-cd-qa.GRAL.GRAL_CA_OPERACIONES_TXT A
+    )
+    SELECT PAIS, CATEGORIA, ARCHIVO, LINK
+    FROM Q
+    WHERE RANK = 1
+),
+consulta_principal AS (
+    SELECT
+        operaciones_txt.PAIS AS operaciones_txt_pais,
+        operaciones_txt.CATEGORIA AS operaciones_txt_categoria,
+        operaciones_txt.ARCHIVO AS operaciones_txt_archivo,
+        operaciones_txt.LINK AS operaciones_txt_link
+    FROM operaciones_txt
+    WHERE operaciones_txt.PAIS IS NOT NULL
+        AND operaciones_txt.PAIS = 'BRASIL'
+    GROUP BY ALL
+    ORDER BY 3 DESC
+)
+SELECT 
+    CASE 
+        WHEN COUNT(*) > 0 THEN 1 
+        ELSE 0 
+    END AS indicador_brasil
+FROM consulta_principal;
+
+
+-------------
+-- 1
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.VIS.ACTIVOS30_CENAMPA 
+            WHERE PAIS = 'BRASIL' 
+            AND ID_FECHA <= '2024-12-04' -- Fecha Corte al 01 del mes. 
+        ) THEN 1 
+        ELSE 0 
+    END AS ACTIVOS30_CENAMPA_BRASIL
+
+-----------------------------------
+-- 2
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.VIS.ACTIVOS30_KPIS
+            WHERE PAIS = 'BRASIL' 
+            AND ID_FECHA <= '2024-12-04' -- Fecha Corte al 01 del mes. 
+        ) THEN 1 
+        ELSE 0 
+    END AS ACTIVOS30_KPIS_BRASIL
+
+-----------------------------------
+-- 3 
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.VIS.ACTIVOS30_USR_ADMIN
+            WHERE PAIS = 'BRASIL' 
+            AND ID_FECHA <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS ACTIVOS30_USR_ADMIN_BRASIL
+
+-----------------------------------
+-- 4
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.VIS.AGR_FAC_VIS_MES
+            WHERE PAIS = 'BRASIL' 
+            AND MES_VIS_PAIS <= '2024-12-04' -- Fecha Corte al 01 del mes.
+        ) THEN 1 
+        ELSE 0 
+    END AS AGR_FAC_VIS_MES_BRASIL
+
+-----------------------------------
+-- 5
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.PAG.AGR_REGALIAS_DISP_DEBUTANTES
+            WHERE ID_PAIS_SUB = 3     --- # = BRASIL
+            AND FECHA_VIS_PAIS <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END ASAGR_REGALIAS_DISP_DEBUTANTES_BRASIL
+
+-----------------------------------
+-- 6
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-des.BI.BI_AGR_VIS_ACT_30_MP
+            WHERE PAIS = 'BRASIL'
+            AND FECHA_CIERRE <= '2024-12-04' -- Fecha Corte al 01 del mes.
+        ) THEN 1 
+        ELSE 0 
+    END BI_AGR_VIS_ACT_30_MP_BRASIL
+
+-----------------------------------
+-- 7
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-des.BI.BI_AGR_VIS_OVH_MP
+            WHERE PAIS = 'BRASIL'
+            AND FECHA_CIERRE <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END BI_AGR_VIS_OVH_MP_BRASIL
+
+-----------------------------------
+-- 8
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-des.BI.BI_AGR_VIS_TRANSACCIONES_MP
+            WHERE PAIS = 'BRASIL'
+            AND FECHA_CIERRE <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END BI_AGR_VIS_TRANSACCIONES_MP_BRASIL
+
+-----------------------------------
+-- 9
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-des.BI.BI_CA_DW_CLIENTE
+            WHERE PAIS = 'BRASIL'
+            AND COD_FECHA <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END BI_CA_DW_CLIENTE_BRASIL
+
+-----------------------------------
+-- 10
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-des.BI.BI_CA_FAC_AG_KPIS_CLARO_VIDEO_MP
+            WHERE PAIS = 'BRASIL'
+            AND FECHA_INSERT <= '2024-12-04' 
+        ) THEN 1 
+        ELSE 0 
+    END BI_CA_FAC_AG_KPIS_CLARO_VIDEO_MP_BRASIL
+
+-----------------------------------
+-- 11
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-des.BI.BI_CA_FAC_CLIENTE_COMPRA_RENTA
+            WHERE PAIS = 'BRASIL'
+            AND FECHA_PAIS <= '2024-12-04'  -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END BI_CA_FAC_CLIENTE_COMPRA_RENTA_BRASIL
+
+-----------------------------------
+-- 12
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-des.BI.BI_TA_DW_SUSC_ACTIVAS
+            WHERE PAIS = 'BRASIL'
+            AND ID_FECHA <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END BI_TA_DW_SUSC_ACTIVAS_BRASIL
+
+-------------------------------------
+-- 13
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.PAG.BQ_REGALIAS
+            WHERE PAIS = 'BRASIL'
+            AND  FECHA_VIS_PAIS <= 20241204 -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END BQ_REGALIAS_BRASIL
+
+-------------------------------------
+-- 14
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.VIS.CONSUMO_CONTENIDO
+            WHERE ID_PAIS = 742
+            AND  FECHA <= '2024-12-04'
+        ) THEN 1 
+        ELSE 0 
+    END CONSUMO_CONTENIDO_BRASIL
+
+-------------------------------------
+-- 15
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.VIS.FAC_CANAL_ALTAS_BAJAS
+            WHERE COD_PAIS = 742
+            AND  ID_FECHA <= '2024-12-04'
+        ) THEN 1 
+        ELSE 0 
+    END FAC_CANAL_ALTAS_BAJAS_BRASIL
+
+-------------------------------------
+-- 16
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.TXT.TXT_TRANSACCIONES
+            WHERE PAIS = 'BRASIL' 
+            AND FECHA_CORTE <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS TXT_TRANSACCIONES_BRASIL
+--------------------------------------
+-- 17
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.LOGIN_REGISTRO.FAC_PRIMER_LOGIN
+            WHERE PAIS = 'BRASIL' 
+            AND MES_EVENTO_PAIS <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS FAC_PRIMER_LOGIN_BRASIL
+--------------------------------------
+-- 18
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.VIS.AGR_VIS_R1_DISP_NORMALIZADO
+            WHERE id_pais_sub = 742
+            AND fecha_vis_pais <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS AGR_VIS_R1_DISP_NORMALIZADO_BRASIL
+
+--------------------------------------
+-- 19
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.PAG.BQ_REGALIAS
+            WHERE PAIS = 'BRASIL'
+            AND FECHA_VIS_PAIS <= 20241204 -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS BQ_REGALIAS_BRASIL
+
+--------------------------------------
+-- 20
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.VIS.TXT_VIS_NORM_JUMP
+            WHERE ds_pais = 'BRASIL'
+            AND fecha_vis_pais <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS TXT_VIS_NORM_JUMP_BRASIL
+
+--------------------------------------
+-- 21
+
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-con.JUMP.TXT_CATALOGO_CV
+            WHERE PAIS = 'BRASIL'
+            AND FECHA_CORTE <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS TXT_CATALOGO_CV_BRASIL
+
+--------------------------------------
+-- 22
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.TXT.TXT_SUSCRIPCIONES
+            WHERE PAIS = 'BRASIL'
+            AND FECHA_CORTE <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS TXT_SUSCRIPCIONES_BRASIL
+
+--------------------------------------
+-- 23
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-des.BI.BI_AGR_VIS_PRODUCTO_DISP_NORM_HIST
+            WHERE ID_PAIS_NAT = 742
+            AND ID_FECHA <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS BI_AGR_VIS_PRODUCTO_DISP_NORM_HIST_BRASIL
+
+--------------------------------------
+-- 24
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.VIS.DIM_GRUPO_EVENTOS_ESPECIALES
+            WHERE ID_PAIS = 742
+            AND FECHA_DESDE <= '2024-12-04' -- solo eventos especiales
+        ) THEN 1 
+        ELSE 0 
+    END AS DIM_GRUPO_EVENTOS_ESPECIALES_BRASIL
+
+--------------------------------------
+-- 25
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.VIS.ACTIVOS30_LATAM
+            WHERE COD_PAIS = 742
+            AND FECHA_CORTE <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS ACTIVOS30_LATAM_BRASIL
+
+--------------------------------------
+-- 26
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.VIS.CONSUMO_CONTENIDO
+            WHERE ID_PAIS = 742
+            AND FECHA <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS CONSUMO_CONTENIDO_BRASIL
+
+--------------------------------------
+-- 27
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.VIS.TV_EVERYWHERE
+            WHERE pais = 'BRASIL'
+            AND fecha_evento <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS TV_EVERYWHERE_BRASIL
+
+--------------------------------------
+-- 28
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.GRAL.GRAL_CA_OPERACIONES_LOGIN_TXT
+            WHERE PAIS = 'BRASIL'
+            AND VENCIMIENTO <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS GRAL_CA_OPERACIONES_LOGIN_TXT_BRASIL
+
+--------------------------------------
+-- 29
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.GRAL.OPERACIONES_BUCKET_ARCHIVOS
+            WHERE PAIS = 'BRASIL'
+            AND VENCIMIENTO <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS OPERACIONES_BUCKET_ARCHIVOS_BRASIL
+
+--------------------------------------
+-- 30
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-des.BI.BI_CA_FAC_LOGIN_REGISTRO_DET_LOOKER
+            WHERE PAIS = 'BRASIL'
+            AND FECHA_EVENTO <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS BI_CA_FAC_LOGIN_REGISTRO_DET_LOOKER_BRASIL
+
+-----------------------------------------
+-- 31
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-des.BI.BI_CA_FAC_LOGIN_REGISTRO_LOOKER
+            WHERE PAIS = 'BRASIL'
+            AND ID_FECHA <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS BI_CA_FAC_LOGIN_REGISTRO_LOOKER_BRASIL
+
+-------------------------------------------
+-- 32
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.PAG.FAC_SUSCRITOS_ESPECIALES
+            WHERE PAIS = 'BRASIL'
+            AND FECHA <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS FAC_SUSCRITOS_ESPECIALES_BRASIL
+
+-------------------------------------------
+-- 33
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.PAG.BD_COMPLETA_HUB
+            WHERE PAIS = 'BRASIL'
+            AND FECHA_CREACION <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS BD_COMPLETA_HUB_BRASIL
+
+----------------------------------------------
+-- 34
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.PAG.DW_SUSC_ACTIVAS_DIARIAS_DETALLE
+            WHERE PAIS = 'BRASIL'
+            AND ID_FECHA <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS DW_SUSC_ACTIVAS_DIARIAS_DETALLE_BRASIL
+
+----------------------------------------------
+-- 35
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM amco-cv-qa.TXT.TXT_CLIENTES
+            WHERE PAIS = 'BRASIL'
+            AND COD_FECHA_BAJA <= '2024-12-04' -- Se pobla al dia
+        ) THEN 1 
+        ELSE 0 
+    END AS TXT_CLIENTES_BRASIL
