@@ -16,5 +16,6 @@ class TestCases_Plan_Brasil():
 
         for table, values in self.dict_Tables.items():
             
-            print(i)
+            print("\n", i)
             query_Brasil(table, values[0], values[1], values[2], values[3])
+            i += 1
