@@ -51,7 +51,7 @@ class Locators_validation_TXT_CV():
                     #'PUERTORICO' : 27, # <-----
                     'URUGUAY' : 21
                     }
-					
+
     dict_File_per_Operation = {
                     'ARGENTINA' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados', 'UsuariosInactivos', 'UsuariosSinCustomerId', 'Visualizaciones'],
                     'BRASIL' : ['Catalogo', 'Suscripciones', 'SuscripcionesDiarias', 'Transacciones', 'Usuarios', 'Usuarios_Eliminados','Visualizaciones'],
