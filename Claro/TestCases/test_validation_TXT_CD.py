@@ -91,7 +91,7 @@ class TestCases_validation_TXT_CD():
         #---
         time.sleep(15)
         driver.get(self.Loocker_URL_Archivos_Operaciones_CD)
-        
+        time.sleep(10)
         # Validate the correct Dashboard based on the Country Button. 
         try:
             WebDriverWait(driver, 15).until(
@@ -158,7 +158,7 @@ class TestCases_validation_TXT_CD():
         # Obtain the DateTime and Replace the "-" symbol. 
         # Claro Drive SIEMPRE se revisa UN DIA ANTERIOR.
         today = str(datetime.date.today() - datetime.timedelta(days = 1)).replace("-","")
-        #today = str(20241025)
+        #today = str(20241214)
         # ----- Enter the Zip File
         # Validate the 16 Countries
         for country in self.list_Countries:
