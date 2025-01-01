@@ -1,12 +1,25 @@
 import calendar
+
 from datetime import datetime
 
 class Locators_Reportes_Mensual_Usuarios_CD():
 
     def generate_date():
-        month = calendar.month_name[datetime.now().month - 1][0:3]
-        year = datetime.now().year if datetime.now().month != 1 else datetime.now().year - 1
-        new_date = f"{year} {month}"
+        # Obtenemos la Fecha
+        now = datetime.now()
+        # Calcula el Mes Anterior:
+        # - now.month - 1: Resta 1 al mes actual.
+        # - % 12: Asegura que el resultado esté dentro del rango 1-12 (Enero -> Diciembre).
+        # - or 12: Si el resultado es 0 (por ejemplo, 1 - 1 = 0), cambia a 12 (Diciembre).
+        prev_month = (now.month - 1) % 12 or 12
+        # Ajusta el Año si el Mes actual es Enero:
+        # Si estamos en Enero (now.month == 1), resta 1 al Año Actual.
+        # Para otros Meses, el Año no Cambia.
+        prev_year = now.year - (1 if now.month == 1 else 0)
+        # Obtiene el nombre abreviado del mes anterior:
+        # calendar.month_name[prev_month] Obtiene el nombre completo del mes anterior.
+        # [:3] Toma los primeros tres caracteres para obtener la abreviatura.
+        new_date = f"{prev_year} {calendar.month_name[prev_month][:3]}"
         return new_date
 
     #Download_path = "/tmp/" # Sólo aplica al Proyecto en la Nube
