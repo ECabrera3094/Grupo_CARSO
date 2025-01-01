@@ -109,7 +109,8 @@ class TestCases_Reporte_Mensual_Usuarios_CD():
         """
         msg = MIMEMultipart()
         msg['From'] = from_email
-        msg['To'] = 'cabreraemi@globalhitss.com'
+        #msg['To'] = 'cabreraemi@globalhitss.com' 
+        msg['To'] = 'team_gcp@clarovideotv.com' 
         msg['Subject'] = subject
 
         # Especifica que el tipo de contenido es texto plano sin ningún tipo de formato como HTML.
